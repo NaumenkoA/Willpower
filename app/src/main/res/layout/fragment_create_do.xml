@@ -1,14 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:app="http://schemas.android.com/apk/res-auto"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/colorLigthGrey"
+             android:focusable="true"
+             android:focusableInTouchMode="true"
+             android:background="@color/colorLightGrey"
              tools:context="com.droid.alex.willtrip.ui.CreateDoFragment">
 
             <ScrollView
+                android:id="@+id/scrollView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:fillViewport="false"
+                android:layout_alignParentTop="true"
+                android:isScrollContainer="false"
+                android:layout_above="@+id/createButton"
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -42,11 +49,15 @@
                         android:layout_alignParentLeft="true"/>
 
                     <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/titleEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
                         android:shadowColor="@color/colorGrey"
                         app:backgroundTint="@color/colorBlue"
+                        android:textCursorDrawable="@drawable/cursor_drawable"
                         android:layout_alignBaseline="@id/titleTextView"
                         android:layout_toRightOf="@id/titleTextView"
                         android:layout_marginRight="8dp"
@@ -78,42 +89,29 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:textSize="16sp"
-                            android:background="@color/colorLigthGrey"
+                            android:background="@color/colorLightGrey"
                             style="?android:attr/buttonBarStyle"
                             android:layout_height="wrap_content"
                             android:text="@string/don_t_do_it"/>
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/descriptionEditText"
+                        android:hint="@string/description_of_commitment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/buttonPanel"
-                        android:orientation="horizontal"
+                        android:shadowColor="@color/colorGrey"
+                        app:backgroundTint="@color/colorBlue"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:textCursorDrawable="@drawable/cursor_drawable"
+                        android:textSize="16sp"
                         android:layout_marginBottom="16dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginTop="24dp">
-
-                        <TextView
-                            android:id="@+id/noteTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="8dp"
-                            android:text="@string/description"
-                            android:textSize="18sp"
-                            android:layout_marginRight="8dp"/>
-
-                        <ImageButton
-                            android:id="@+id/noteImageButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:src="@drawable/ic_description_blue_36dp"
-                            android:contentDescription="@string/add_description"/>
-
-                    </LinearLayout>
+                        android:layout_marginTop="24dp"/>
 
                 </RelativeLayout>
 
@@ -233,7 +231,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
                         android:id="@+id/dayTypeSpinner"
-                        android:layout_width="250dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp">
                     </Spinner>
@@ -341,6 +339,7 @@
                             android:layout_marginRight="8dp"/>
 
                         <TextView
+                            android:id="@+id/expireDateTextView"
                             android:textSize="18sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -350,7 +349,7 @@
                             android:layout_marginRight="8dp"/>
 
                         <ImageButton
-                            android:id="@+id/calendarImageButton"
+                            android:id="@+id/calendarButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
@@ -360,7 +359,7 @@
                             android:layout_marginRight="8dp"/>
 
                         <ImageButton
-                            android:id="@+id/clearImageButton"
+                            android:id="@+id/clearButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
@@ -373,7 +372,7 @@
 
             </android.support.v7.widget.CardView>
 
-        </RelativeLayout>
+                </RelativeLayout>
 
             </ScrollView>
 
@@ -381,13 +380,13 @@
         android:id="@+id/createButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:enabled="false"
+        android:layout_alignParentBottom="true"
+        android:enabled="true"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/create_commitment"/>
 
-</FrameLayout>
+</RelativeLayout>
 
 

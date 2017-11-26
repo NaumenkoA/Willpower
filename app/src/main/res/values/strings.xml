@@ -37,4 +37,16 @@
     <string name="add_description">Add description</string>
     <string name="select_date">select date</string>
     <string name="set_infinite_duration">set infinite duration</string>
+    <string name="description_of_commitment">Description of commitment...</string>
+
+    <string-array name="day_types">
+        <item>Select certain days</item>
+        <item>Set number of days during the week</item>
+        <item>Everyday</item>
+    </string-array>
+
+    <string name="submit">Submit</string>
+    <string name="select_final_date_for_your_commitment">Select final date for your commitment</string>
+    <string name="note">Note: you need minimum 21 day to create a new habit</string>
+
 </resources>
