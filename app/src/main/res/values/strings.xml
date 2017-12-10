@@ -11,13 +11,6 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
-    <string name="mon">Mon</string>
-    <string name="tue">Tue</string>
-    <string name="wed">Wed</string>
-    <string name="thu">Thu</string>
-    <string name="fri">Fri</string>
-    <string name="sat">Sat</string>
-    <string name="sun">Sun</string>
     <string name="select_all">Select all</string>
     <string name="complexity">Complexity:</string>
     <string name="create">Create</string>
@@ -37,12 +30,23 @@
     <string name="add_description">Add description</string>
     <string name="select_date">select date</string>
     <string name="set_infinite_duration">set infinite duration</string>
-    <string name="description_of_commitment">Description of commitment...</string>
+    <string name="description_of_commitment">About your commitment...</string>
 
     <string-array name="day_types">
         <item>Select certain days</item>
         <item>Set number of days during the week</item>
         <item>Everyday</item>
+    </string-array>
+
+    <string-array name="days_of_week">
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+
     </string-array>
 
     <string name="submit">Submit</string>

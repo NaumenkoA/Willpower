@@ -15,7 +15,7 @@
                 android:layout_alignParentTop="true"
                 android:isScrollContainer="false"
                 android:layout_above="@+id/createButton"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -36,7 +36,7 @@
 
                     <TextView
                         android:id="@+id/titleTextView"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="24dp"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:textSize="18sp"
@@ -182,7 +182,7 @@
                             android:layout_height="50dp"
                             android:layout_marginEnd="8dp"
                             android:text="@string/_3"
-                            android:textColor="@color/colorYellow"
+                            android:textColor="@color/colorDarkYellow"
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:layout_marginRight="8dp"/>
@@ -241,6 +241,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_below="@id/dayTypeSpinner"
                         android:orientation="horizontal"
+                        android:paddingBottom="4dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -248,9 +249,9 @@
                             android:id="@+id/roundButton1"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            app:selected_color="@color/colorBlue"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="4dp"
-                            android:text="@string/mon"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"
                             android:layout_marginRight="4dp"
@@ -260,9 +261,9 @@
                             android:id="@+id/roundButton2"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
                             android:layout_marginRight="4dp"
-                            android:text="@string/tue"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
@@ -270,9 +271,9 @@
                             android:id="@+id/roundButton3"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
                             android:layout_marginRight="4dp"
-                            android:text="@string/wed"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
@@ -280,9 +281,9 @@
                             android:id="@+id/roundButton4"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
                             android:layout_marginRight="4dp"
-                            android:text="@string/thu"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
@@ -290,9 +291,9 @@
                             android:id="@+id/roundButton5"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
                             android:layout_marginRight="4dp"
-                            android:text="@string/fri"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
@@ -300,9 +301,9 @@
                             android:id="@+id/roundButton6"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
                             android:layout_marginRight="4dp"
-                            android:text="@string/sat"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
@@ -310,9 +311,9 @@
                             android:id="@+id/roundButton7"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
                             android:layout_marginRight="4dp"
-                            android:text="@string/sun"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
@@ -321,7 +322,7 @@
                     <LinearLayout
                         android:id="@+id/dateLayout"
                         android:layout_below="@id/daysLayout"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginBottom="16dp"
                         android:layout_marginStart="8dp"
                         android:orientation="horizontal"
@@ -381,7 +382,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:enabled="true"
+        android:enabled="false"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"

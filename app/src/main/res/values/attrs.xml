@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundButton">
+        <attr name="selected" format="boolean" />
+        <attr name="main_color" format="color" />
+        <attr name="selected_color" format="color" />
+        <attr name="stroke_color" format="color" />
+    </declare-styleable>
+</resources>
