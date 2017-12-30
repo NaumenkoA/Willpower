@@ -43,6 +43,8 @@ class DateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
         listener = activity as OnDateSelectedListener

@@ -53,4 +53,7 @@
     <string name="select_final_date_for_your_commitment">Select final date for your commitment</string>
     <string name="note">Note: you need minimum 21 day to create a new habit</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

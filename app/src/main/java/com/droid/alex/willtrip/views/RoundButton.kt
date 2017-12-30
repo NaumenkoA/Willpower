@@ -15,7 +15,14 @@ class RoundButton : Button {
     private val paint = Paint()
     private val circlePaint = Paint()
 
-    private var selectedState = false
+    var selectedState = false
+        set(value) {
+            if (selectedState != value) {
+                field = value
+                postInvalidate()
+                requestLayout()
+            }
+        }
     private var selectedColor = Color.GRAY
     private var mainColor = Color.LTGRAY
     private var strokeColor = Color.BLACK
@@ -62,16 +69,9 @@ class RoundButton : Button {
         super.onDraw(canvas)
     }
 
-    fun setSelectedState (selected: Boolean) {
-        if (selectedState != selected) {
-            selectedState = selected
-            postInvalidate()
-            requestLayout()
-        }
-    }
 
     fun swap () {
-        setSelectedState(!selectedState)
+        selectedState = !selectedState
         postInvalidate()
         requestLayout()
     }
