@@ -2,5 +2,5 @@ package com.droid.alex.willtrip.model
 
 import java.util.*
 
-abstract class Do(val name: String, val note: String, val isPositive: Boolean = true, val complexity: Int, val expireDate: Date?) {
+abstract class Do(val name: String, val note: String?, val isPositive: Boolean = true, val complexity: Int, val expireDate: Date?) {
 }

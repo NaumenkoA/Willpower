@@ -12,19 +12,24 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="select_all">Select all</string>
-    <string name="complexity">Complexity:</string>
     <string name="create">Create</string>
     <string name="use_times_during_the_week">Set times during the week instead of certain days</string>
-    <string name="every_day">Every day</string>
-    <string name="number_of_days">Number of days:</string>
+    <string name="every_day_caps">Every day</string>
+    <string name="every_day">every day</string>
+    <string name="number_of_days">Number of days:\u0020</string>
     <string name="write_about_your_commitment_here">Write about your commitment here...</string>
     <string name="_4">4</string>
     <string name="_3">3</string>
     <string name="_2">2</string>
     <string name="_5">5</string>
     <string name="_1">1</string>
+    <string name="hard">hard</string>
+    <string name="medium">medium</string>
+    <string name="easy">easy</string>
+    <string name="very_hard">very hard</string>
+    <string name="very_easy">very easy</string>
     <string name="infinite">infinite</string>
-    <string name="active_till">Active till:</string>
+    <string name="active_till">Active till:\u0020</string>
     <string name="create_commitment">Create commitment</string>
     <string name="description">Description: </string>
     <string name="add_description">Add description</string>
@@ -52,11 +57,13 @@
     <string name="submit">Submit</string>
     <string name="select_final_date_for_your_commitment">Select final date for your commitment</string>
     <string name="note">Note: you need minimum 21 day to create a new habit</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="all">All</string>
     <string name="today">Today</string>
     <string name="will_trip">Will trip</string>
+    <string name="add_your_new_commitment">Add your new commitment</string>
+    <string name="complexity">Complexity:\u0020</string>
+    <string name="days_of_week">Days of week:\u0020</string>
+    <string name="description_placeholder">Description: </string>
 
 </resources>

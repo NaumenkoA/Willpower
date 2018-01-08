@@ -11,6 +11,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_above="@+id/navigation"
     android:id="@+id/container"/>
 
     <android.support.design.widget.BottomNavigationView
@@ -18,7 +19,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        app:itemBackground="@color/colorBlue"
+        app:itemBackground="@color/colorGrey"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
         android:layout_height="56dp"

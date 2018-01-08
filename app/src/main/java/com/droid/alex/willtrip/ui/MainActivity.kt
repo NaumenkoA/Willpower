@@ -49,17 +49,19 @@ class MainActivity : AppCompatActivity(), CreateDoFragment.OnDateSelectionListen
 
         navigation.setOnNavigationItemSelectedListener { item ->
             when (item.getItemId()) {
-                R.id.action_all -> Toast.makeText(this, "All", Toast.LENGTH_SHORT).show()
+                R.id.action_all -> addFragment(DoListFragment(), R.id.container, DO_LIST_FRAGMENT)
                 R.id.action_today -> Toast.makeText(this, "Today", Toast.LENGTH_SHORT).show()
                 R.id.action_trip_mode -> Toast.makeText(this, "Will trip", Toast.LENGTH_SHORT).show()
             }
             true
         };
+        navigation.selectedItemId = R.id.action_all
     }
 
     companion object {
         val DATE_FRAGMENT = "date_fragment"
         val CREATE_DO_FRAGMENT = "create_do_fragment"
+        val DO_LIST_FRAGMENT = "do_list_fragment"
     }
 
     override fun onBackPressed() {
