@@ -1,6 +1,7 @@
 package com.droid.alex.willtrip.ui
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -34,5 +35,9 @@ class DoListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = DoAdapter (arrayOfDo, context)
 
+        fab.setOnClickListener {
+            val intent = Intent(context, CreateDoActivity::class.java)
+            startActivityForResult (intent, MainActivity.CREATE_DO_REQUEST)
+        }
     }
 }

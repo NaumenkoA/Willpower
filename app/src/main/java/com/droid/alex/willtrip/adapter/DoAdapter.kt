@@ -21,7 +21,7 @@ class DoAdapter(private val items: ArrayList<Do>, private val context: Context):
 
     override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int): Unit = holder.bind(items[position], context)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position], context)
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -76,8 +76,8 @@ class DoAdapter(private val items: ArrayList<Do>, private val context: Context):
                 }
 
             when (item.note) {
-                null -> context.resources.getString(R.string.description_placeholder, "-")
-                else -> context.resources.getString(R.string.description_placeholder, item.note)
+//                null -> context.resources.getString(R.string.description_placeholder, "-")
+//                else -> context.resources.getString(R.string.description_placeholder, item.note)
             }
         }
 

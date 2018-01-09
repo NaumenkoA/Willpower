@@ -13,31 +13,9 @@ import android.view.MenuItem
 import android.widget.Toast
 
 
-class MainActivity : AppCompatActivity(), CreateDoFragment.OnDateSelectionListener, DateFragment.OnDateSelectedListener {
+class MainActivity : AppCompatActivity() {
 
     var currentFragment:Fragment? = null
-
-
-    override fun onDateSelected(date: Date) {
-        swapDateFragment(date)
-    }
-
-    private fun swapDateFragment(date: Date?) {
-        val createDoFragment = supportFragmentManager.findFragmentByTag(CREATE_DO_FRAGMENT) as CreateDoFragment
-        val dateFragment = supportFragmentManager.findFragmentByTag(DATE_FRAGMENT)
-        createDoFragment.onDateSelected(date)
-        removeFragment(dateFragment)
-        showFragment(createDoFragment)
-        currentFragment = createDoFragment
-    }
-
-    override fun onDateSelection() {
-        val createDoFragment = supportFragmentManager.findFragmentByTag(CREATE_DO_FRAGMENT)
-        hideFragment(createDoFragment)
-        val newDateFragment = DateFragment ()
-        addFragment(newDateFragment, R.id.container, DATE_FRAGMENT)
-        currentFragment = newDateFragment
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,15 +40,7 @@ class MainActivity : AppCompatActivity(), CreateDoFragment.OnDateSelectionListen
         val DATE_FRAGMENT = "date_fragment"
         val CREATE_DO_FRAGMENT = "create_do_fragment"
         val DO_LIST_FRAGMENT = "do_list_fragment"
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        when (currentFragment) {
-            is DateFragment -> {
-                swapDateFragment(null)
-            }
-        }
+        val CREATE_DO_REQUEST = 1
     }
 }
 
