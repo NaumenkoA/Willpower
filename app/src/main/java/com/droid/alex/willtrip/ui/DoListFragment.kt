@@ -29,7 +29,7 @@ class DoListFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val doDays1 = DoDays (complexity = 2, name = "Get up at 6:00", note = "Become early bird", isPositive = false, expireDate = null, numberOfDays = arrayListOf(0,5,6))
+        val doDays1 = DoDays (complexity = 2, name = "Get up at 6:00", note = "Become early bird", isPositive = false, startDate = Calendar.getInstance().time, expireDate = null, numberOfDays = arrayListOf(0,5,6))
 
         val arrayOfDo = arrayListOf<Do>(doDays1)
         recyclerView.layoutManager = LinearLayoutManager(context)

@@ -35,11 +35,12 @@
     <string name="add_description">Add description</string>
     <string name="select_date">select date</string>
     <string name="set_infinite_duration">set infinite duration</string>
-    <string name="description_of_commitment">About your commitment...</string>
+    <string name="description_of_commitment">About your commitment…</string>
 
     <string-array name="day_types">
         <item>Select certain days</item>
         <item>Set number of days during the week</item>
+        <item>Repeat every few days</item>
         <item>Everyday</item>
     </string-array>
 
@@ -65,5 +66,8 @@
     <string name="complexity">Complexity:\u0020</string>
     <string name="days_of_week">Days of week:\u0020</string>
     <string name="description_placeholder">Description: </string>
+    <string name="start_date">Start date:</string>
+    <string name="repeat_every">Do every</string>
+    <string name="days">days</string>
 
 </resources>

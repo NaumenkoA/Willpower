@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.activity_calendar.*
 import java.util.*
 import android.app.Activity
 import android.content.Intent
+import android.view.View
 import com.droid.alex.willtrip.extension_func.getDate
 
 
@@ -14,15 +15,19 @@ class CalendarActivity : AppCompatActivity() {
 
     companion object {
         val SELECTED_DATE = "selected_date"
+        val MIN_DATE = "min_date"
+        val IS_TEXT_HINT_VISIBLE = "is_text_hint_visible"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
 
-        val calendar = Calendar.getInstance()
+        val isTextHintVisible = intent.getBooleanExtra(IS_TEXT_HINT_VISIBLE, false)
+        if (isTextHintVisible) textHint.visibility = View.VISIBLE
+        else textHint.visibility = View.INVISIBLE
 
-        datePicker.minDate = calendar.timeInMillis + 1*24*60*60*1000
+        datePicker.minDate = intent.getLongExtra(MIN_DATE, Calendar.getInstance().timeInMillis)
 
         submitButton.setOnClickListener {
 

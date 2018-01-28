@@ -6,7 +6,7 @@
              android:focusable="true"
              android:focusableInTouchMode="true"
              android:background="@color/colorLightGrey"
-             tools:context="com.droid.alex.willtrip.ui.CreateDoFragment">
+             tools:context="com.droid.alex.willtrip.ui.CreateDoActivity">
 
             <ScrollView
                 android:id="@+id/scrollView"
@@ -320,9 +320,91 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/dateLayout"
+                        android:id="@+id/repeatNumLayout"
+                        android:layout_marginTop="16dp"
+                        android:layout_below="@id/dayTypeSpinner"
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp"
+                        android:visibility="invisible"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="italic"
+                            android:layout_marginStart="8sp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="@string/repeat_every"
+                            android:textSize="18sp"
+                            android:layout_marginLeft="8sp"/>
+
+                        <EditText
+                            android:id="@+id/repeatNumEditText"
+                            android:textSize="18sp"
+                            android:textStyle="italic"
+                            android:inputType="number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8sp"
+                            android:textStyle="italic"
+                            android:text="@string/days"
+                            android:textSize="18sp"
+                            android:layout_marginLeft="8sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/startDateLayout"
                         android:layout_below="@id/daysLayout"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp">
+
+                        <TextView
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/start_date"
+                            android:layout_marginRight="8dp"/>
+
+                        <TextView
+                            android:id="@+id/startDateTextView"
+                            android:textSize="18sp"
+                            android:minEms="5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp"
+                            tools:text="27.01.2018"
+                            android:layout_marginRight="8dp"/>
+
+                        <ImageButton
+                            android:id="@+id/startDateCalendarButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/round_button"
+                            android:src="@drawable/ic_date_range_blue_36dp"
+                            android:contentDescription="@string/select_date"
+                            android:layout_marginRight="8dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/endDateLayout"
+                        android:layout_below="@id/startDateLayout"
                         android:layout_marginBottom="16dp"
                         android:layout_marginStart="8dp"
                         android:orientation="horizontal"
@@ -351,7 +433,7 @@
                             android:layout_marginRight="8dp"/>
 
                         <ImageButton
-                            android:id="@+id/calendarButton"
+                            android:id="@+id/endDateCalendarButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"

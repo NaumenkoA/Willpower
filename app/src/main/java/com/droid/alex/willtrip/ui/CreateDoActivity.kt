@@ -10,14 +10,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.droid.alex.willtrip.R
-import com.droid.alex.willtrip.extension_func.getDate
 import com.droid.alex.willtrip.extension_func.setColor
 import com.droid.alex.willtrip.extension_func.toastShort
 import com.droid.alex.willtrip.model.Do
 import com.droid.alex.willtrip.model.DoDays
 import com.droid.alex.willtrip.model.DoNum
 import com.droid.alex.willtrip.views.RoundButton
-import kotlinx.android.synthetic.main.activity_calendar.*
 import kotlinx.android.synthetic.main.activity_create_do.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,7 +23,11 @@ import java.util.*
 class CreateDoActivity : AppCompatActivity() {
 
     companion object {
-        val SELECT_DATE_REQUEST = 2
+        val SELECT_START_DATE_REQUEST = 2
+        val SELECT_END_DATE_REQUEST = 3
+        val MODE_SELECT_DAYS = "mode_select_days"
+        val MODE_SELECT_NUM_DAYS = "mode_select_num_days"
+        val MODE_SELECT_PERIODIC = "mode_select_periodic"
         val NEW_DO_OBJECT = "new_do_object"
     }
 
@@ -34,7 +36,9 @@ class CreateDoActivity : AppCompatActivity() {
     private var selectedNumButton: RoundButton? = null
     private lateinit var complexityButtonArray: ArrayList<RoundButton>
     private var isPositive: Boolean = true
-    private var buttonsAsDays: Boolean = true
+    private var daysMode: String = MODE_SELECT_DAYS
+    private val dateFormatter = SimpleDateFormat("d MMM yyyy", Locale.US)
+    var startDate: Date = Calendar.getInstance().time
     var expireDate: Date? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +51,10 @@ class CreateDoActivity : AppCompatActivity() {
         complexityButtonArray = arrayListOf<RoundButton>(roundButtonVeryEasy, roundButtonEasy, roundButtonMedium, roundButtonHard, roundButtonVeryHard)
         dayButtonArray = arrayListOf<RoundButton>(roundButton1, roundButton2, roundButton3, roundButton4, roundButton5, roundButton6, roundButton7)
 
-        // create adapter for spinner
+               //set start date by default
+        startDateTextView.text = dateFormatter.format(startDate)
+
+                // create adapter for spinner
         val adapter = ArrayAdapter<String>(this, R.layout.spinner_item, resources.getStringArray(R.array.day_types))
         dayTypeSpinner.adapter = adapter
         dayTypeSpinner.setSelection(0)
@@ -89,9 +96,18 @@ class CreateDoActivity : AppCompatActivity() {
             expireDateTextView.text = resources.getString(R.string.infinite)
         }
 
-        calendarButton.setOnClickListener {
+        startDateCalendarButton.setOnClickListener {
             val intent = Intent(this, CalendarActivity::class.java)
-            startActivityForResult (intent, CreateDoActivity.SELECT_DATE_REQUEST)
+            startActivityForResult (intent, CreateDoActivity.SELECT_START_DATE_REQUEST)
+        }
+
+        endDateCalendarButton.setOnClickListener {
+            val intent = Intent(this, CalendarActivity::class.java)
+            intent.putExtra(CalendarActivity.IS_TEXT_HINT_VISIBLE, true)
+
+            val minDate = startDate.time + 1*24*60*60*1000
+            intent.putExtra(CalendarActivity.MIN_DATE, minDate)
+            startActivityForResult (intent, CreateDoActivity.SELECT_END_DATE_REQUEST)
         }
 
         for (button in complexityButtonArray) {
@@ -112,41 +128,24 @@ class CreateDoActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
                     0 -> {
-                        for (button in dayButtonArray) {
-                            button.setOnClickListener {
-                                button.swap()
-                            }
-                            button.selectedState = false
-                        }
-                        buttonsAsDays = true
+                        setDaysSelectionMode(MODE_SELECT_DAYS)
                     }
 
                     1 -> {
-                        for (button in dayButtonArray) {
-                            button.setOnClickListener {
-                                if (button != selectedNumButton) {
-                                    selectedNumButton?.swap()
-                                    selectedNumButton = button
-                                    selectedNumButton?.swap()
-                                }
-                            }
-                            button.selectedState = false
-                        }
-                        selectedNumButton = null
-                        buttonsAsDays = false
+                        setDaysSelectionMode(MODE_SELECT_NUM_DAYS)
                     }
 
                     2 -> {
-                        for (button in dayButtonArray) {
-                            button.setOnClickListener {
-                                button.swap()
-                            }
-                            button.selectedState = true
-                        }
-                        buttonsAsDays = true
+                        setDaysSelectionMode(MODE_SELECT_PERIODIC)
                     }
+
+                    3 -> {
+                        setDaysSelectionMode(MODE_SELECT_DAYS)
+                        for (button in dayButtonArray) {
+                            button.selectedState = true
+                            }
+                        }
                 }
-                showButtonsAsDays()
             }
         }
 
@@ -163,12 +162,13 @@ class CreateDoActivity : AppCompatActivity() {
                 }
 
                 when (dayTypeSpinner.selectedItemPosition) {
-                    0, 2 -> {
+                    0, 3 -> {
                         val newDoDays = DoDays(name = titleEditText.text.toString(),
                                 note = descriptionEditText.text.toString(),
                                 complexity = Integer.parseInt(selectedCompButton!!.text.toString()),
                                 isPositive = isPositive,
                                 numberOfDays = numOfDaysArray,
+                                startDate = startDate,
                                 expireDate = expireDate
                         )
                         sendCreatedDoObj(newDoDays)
@@ -179,6 +179,7 @@ class CreateDoActivity : AppCompatActivity() {
                                 complexity = Integer.parseInt(selectedCompButton!!.text.toString()),
                                 isPositive = isPositive,
                                 numberOfDays = numOfDaysArray.get(0) + 1,
+                                startDate = startDate,
                                 expireDate = expireDate
                         )
                         sendCreatedDoObj(newDoNum)
@@ -191,13 +192,17 @@ class CreateDoActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == SELECT_DATE_REQUEST) {
+        if (requestCode == SELECT_START_DATE_REQUEST|| requestCode == SELECT_END_DATE_REQUEST) {
             if (resultCode == RESULT_OK) {
                 val selectedDate = data?.getSerializableExtra(CalendarActivity.SELECTED_DATE) as Date?
                 if (selectedDate!= null) {
-                    expireDate = selectedDate
-                    val dateFormatter = SimpleDateFormat("d MMM yyyy", Locale.US)
-                    expireDateTextView.text = dateFormatter.format(expireDate)
+                    if (requestCode == SELECT_START_DATE_REQUEST) {
+                        startDate = selectedDate
+                        startDateTextView.text = dateFormatter.format(startDate)
+                    } else {
+                        expireDate = selectedDate
+                        expireDateTextView.text = dateFormatter.format(expireDate)
+                    }
                 }
             }
             }
@@ -205,7 +210,7 @@ class CreateDoActivity : AppCompatActivity() {
 
     private fun sendCreatedDoObj (obj: Do) {
         val returnIntent = Intent()
-        returnIntent.putExtra(CreateDoActivity.NEW_DO_OBJECT, obj)
+        //returnIntent.putExtra(CreateDoActivity.NEW_DO_OBJECT, obj)
         setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }
@@ -221,35 +226,82 @@ class CreateDoActivity : AppCompatActivity() {
             return false
         }
 
-        var isSelected: Boolean = false
-
-        for (button in dayButtonArray) {
-            if (button.selectedState) isSelected = true
+        if (expireDate != null && startDate > expireDate) {
+            toastShort("Expire date can't be earlier than start date")
+            return false
         }
 
-        if (!isSelected) {
-            toastShort("Select days when you'll follow your commitment")
+        if (daysMode == MODE_SELECT_PERIODIC && repeatNumEditText.text.toString() == "") {
+            toastShort("Set period of repeating your commitment")
             return false
+        } else {
+            var isSelected: Boolean = false
+
+            for (button in dayButtonArray) {
+                if (button.selectedState) isSelected = true
+            }
+            if (!isSelected) {
+                toastShort("Select days when you'll follow your commitment")
+                return false
+            }
         }
 
         return true
     }
 
-    private fun showButtonsAsDays () {
-        if (buttonsAsDays) {
-            val dayNameArray = resources.getStringArray(R.array.days_of_week)
-            for (i in 0 until dayButtonArray.size) {
-                dayButtonArray [i].text = dayNameArray [i]
-            }
-        } else {
-            for (i in 0 until dayButtonArray.size) {
-                dayButtonArray [i].text = (i + 1).toString()
-            }
-        }
-    }
-
     private fun hideKeyboardFrom(view: View) {
         val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun setDaysSelectionMode (mode: String) {
+        when (mode) {
+            MODE_SELECT_DAYS -> {
+                val dayNameArray = resources.getStringArray(R.array.days_of_week)
+                setDaysLayoutVisible(true)
+                for (i in 0 until dayButtonArray.size) {
+                    dayButtonArray [i].text = dayNameArray [i]
+                    dayButtonArray [i].setOnClickListener {
+                        dayButtonArray [i].swap()
+                    }
+                    dayButtonArray [i].selectedState = false
+                }
+               }
+            MODE_SELECT_NUM_DAYS -> {
+                setDaysLayoutVisible(true)
+                for (i in 0 until dayButtonArray.size) {
+                    dayButtonArray [i].text = ((i + 1).toString())
+                    dayButtonArray [i].setOnClickListener {
+                        if (dayButtonArray [i] != selectedNumButton) {
+                            selectedNumButton?.swap()
+                            selectedNumButton = dayButtonArray [i]
+                            selectedNumButton?.swap()
+                        }
+                    }
+                    selectedNumButton = null
+                    dayButtonArray [i].selectedState = false
+                }
+            }
+            MODE_SELECT_PERIODIC -> {
+                setDaysLayoutVisible(false)
+            }
+            else -> throw IllegalArgumentException ("Wrong entry parameter in setDaysSelectionMode function")
+        }
+        daysMode = mode
+    }
+
+    private fun setDaysLayoutVisible (isVisible: Boolean) {
+        val currentVisibility = (daysLayout.visibility == View.VISIBLE)
+
+        if (currentVisibility != isVisible) {
+            if (isVisible) {
+                daysLayout.visibility = View.VISIBLE
+                repeatNumLayout.visibility = View.INVISIBLE
+            }
+            else {
+                daysLayout.visibility = View.INVISIBLE
+                repeatNumLayout.visibility = View.VISIBLE
+            }
+        }
     }
 }
