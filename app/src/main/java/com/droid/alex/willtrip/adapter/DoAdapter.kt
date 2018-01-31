@@ -7,9 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.droid.alex.willtrip.R
-import com.droid.alex.willtrip.model.Do
-import com.droid.alex.willtrip.model.DoDays
-import com.droid.alex.willtrip.model.DoNum
+import com.droid.alex.willtrip.model.do_class.Do
+import com.droid.alex.willtrip.model.do_class.DoDays
+import com.droid.alex.willtrip.model.do_class.DoNum
+import com.droid.alex.willtrip.model.do_class.DoPeriodic
 import kotlinx.android.synthetic.main.do_list_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,7 +31,9 @@ class DoAdapter(private val items: ArrayList<Do>, private val context: Context):
         private val complexity = itemView.complexityTextView
         private val daysType = itemView.daysTitleTextView
         private val days = itemView.daysTextView
-        private val date = itemView.dateTextView
+        private val startDate = itemView.startDateTextView
+        private val expireDate = itemView.expireDateTextView
+        private val description = itemView.descriptionTextView
 
         private val dateFormatter = SimpleDateFormat("d MMM yyyy", Locale.US)
 
@@ -39,8 +42,8 @@ class DoAdapter(private val items: ArrayList<Do>, private val context: Context):
             title.text = item.name
 
             when (item.isPositive)  {
-            true ->  setKindTextAndColor(R.string.do_it, R.color.colorGreen, context)
-            false -> setKindTextAndColor(R.string.don_t_do_it, R.color.colorRed, context)
+            true ->  setKindTextAndColor(R.string.do_it_excl, R.color.colorGreen, context)
+            false -> setKindTextAndColor(R.string.don_t_do_it_excl, R.color.colorRed, context)
         }
 
             when (item.complexity) {
@@ -68,16 +71,22 @@ class DoAdapter(private val items: ArrayList<Do>, private val context: Context):
                     daysType.text = context.resources.getString(R.string.number_of_days)
                     days.text = item.numberOfDays.toString()
                 }
+                is DoPeriodic -> {
+                    daysType.text = context.getString(R.string.do_every_n_days, item.period)
+                    days.visibility = View.INVISIBLE
+                }
             }
 
-            when (item.expireDate) {
-                null -> date.text = context.resources.getString(R.string.infinite)
-                else -> date.text = dateFormatter.format(item.expireDate)
+            startDate.text = dateFormatter.format(item.startDate)
+
+            expireDate.text = when (item.expireDate) {
+                null -> context.resources.getString(R.string.infinite)
+                else -> dateFormatter.format(item.expireDate)
                 }
 
-            when (item.note) {
-//                null -> context.resources.getString(R.string.description_placeholder, "-")
-//                else -> context.resources.getString(R.string.description_placeholder, item.note)
+            description.text = when (item.note) {
+                null -> context.getString(R.string.description_placeholder, "-")
+                else -> context.getString(R.string.description_placeholder, item.note)
             }
         }
 

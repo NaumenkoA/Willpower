@@ -12,9 +12,10 @@ import android.widget.ArrayAdapter
 import com.droid.alex.willtrip.R
 import com.droid.alex.willtrip.extension_func.setColor
 import com.droid.alex.willtrip.extension_func.toastShort
-import com.droid.alex.willtrip.model.Do
-import com.droid.alex.willtrip.model.DoDays
-import com.droid.alex.willtrip.model.DoNum
+import com.droid.alex.willtrip.model.do_class.Do
+import com.droid.alex.willtrip.model.do_class.DoDays
+import com.droid.alex.willtrip.model.do_class.DoNum
+import com.droid.alex.willtrip.model.do_class.DoPeriodic
 import com.droid.alex.willtrip.views.RoundButton
 import kotlinx.android.synthetic.main.activity_create_do.*
 import java.text.SimpleDateFormat
@@ -184,6 +185,17 @@ class CreateDoActivity : AppCompatActivity() {
                         )
                         sendCreatedDoObj(newDoNum)
                     }
+                    2 -> {
+                        val newDoPeriodic = DoPeriodic(name = titleEditText.text.toString(),
+                                note = descriptionEditText.text.toString(),
+                                complexity = Integer.parseInt(selectedCompButton!!.text.toString()),
+                                isPositive = isPositive,
+                                period = Integer.parseInt(repeatNumEditText.text.toString()),
+                                startDate = startDate,
+                                expireDate = expireDate
+                        )
+                        sendCreatedDoObj(newDoPeriodic)
+                    }
                 }
             }
         }
@@ -210,7 +222,7 @@ class CreateDoActivity : AppCompatActivity() {
 
     private fun sendCreatedDoObj (obj: Do) {
         val returnIntent = Intent()
-        //returnIntent.putExtra(CreateDoActivity.NEW_DO_OBJECT, obj)
+        returnIntent.putExtra(CreateDoActivity.NEW_DO_OBJECT, obj)
         setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }

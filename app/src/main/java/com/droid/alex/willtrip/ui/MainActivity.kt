@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         val DATE_FRAGMENT = "date_fragment"
         val CREATE_DO_FRAGMENT = "create_do_fragment"
         val DO_LIST_FRAGMENT = "do_list_fragment"
-        val CREATE_DO_REQUEST = 1
     }
 }
 

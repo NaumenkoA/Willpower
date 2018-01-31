@@ -3,6 +3,8 @@
     <string name="commitment_title">Commitment title:</string>
     <string name="do_it">Do it</string>
     <string name="don_t_do_it">Don\'t do it</string>
+    <string name="do_it_excl">Do it!</string>
+    <string name="don_t_do_it_excl">Don\'t do it!</string>
     <string name="days_of_the_week">Days of the week:</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
@@ -16,18 +18,18 @@
     <string name="use_times_during_the_week">Set times during the week instead of certain days</string>
     <string name="every_day_caps">Every day</string>
     <string name="every_day">every day</string>
-    <string name="number_of_days">Number of days:\u0020</string>
-    <string name="write_about_your_commitment_here">Write about your commitment here...</string>
+    <string name="number_of_days">Times a week:\u0020</string>
+    <string name="write_about_your_commitment_here">Write about your commitment here…</string>
     <string name="_4">4</string>
     <string name="_3">3</string>
     <string name="_2">2</string>
     <string name="_5">5</string>
     <string name="_1">1</string>
-    <string name="hard">hard</string>
-    <string name="medium">medium</string>
-    <string name="easy">easy</string>
-    <string name="very_hard">very hard</string>
-    <string name="very_easy">very easy</string>
+    <string name="hard">hard (4)</string>
+    <string name="medium">medium (3)</string>
+    <string name="easy">easy (2)</string>
+    <string name="very_hard">very hard (5)</string>
+    <string name="very_easy">very easy (1)</string>
     <string name="infinite">infinite</string>
     <string name="active_till">Active till:\u0020</string>
     <string name="create_commitment">Create commitment</string>
@@ -65,9 +67,10 @@
     <string name="add_your_new_commitment">Add your new commitment</string>
     <string name="complexity">Complexity:\u0020</string>
     <string name="days_of_week">Days of week:\u0020</string>
-    <string name="description_placeholder">Description: </string>
-    <string name="start_date">Start date:</string>
+    <string name="description_placeholder">Description: %1$s</string>
+    <string name="start_date">Start date:\u0020</string>
     <string name="repeat_every">Do every</string>
     <string name="days">days</string>
+    <string name="do_every_n_days">Do every %1$s days</string>
 
 </resources>
