@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Will Power</string>
+    <string name="app_name">Will Trip</string>
     <string name="commitment_title">Commitment title:</string>
     <string name="do_it">Do it</string>
     <string name="don_t_do_it">Don\'t do it</string>
@@ -72,5 +72,9 @@
     <string name="repeat_every">Do every</string>
     <string name="days">days</string>
     <string name="do_every_n_days">Do every %1$s days</string>
+    <string name="expand_commitment_description">Expand commitment description</string>
+    <string name="edit">edit</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">cancel</string>
 
 </resources>

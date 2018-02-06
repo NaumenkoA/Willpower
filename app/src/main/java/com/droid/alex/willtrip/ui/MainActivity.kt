@@ -1,16 +1,15 @@
 package com.droid.alex.willtrip.ui
 
+import android.graphics.Rect
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.droid.alex.willtrip.R
 import com.droid.alex.willtrip.extension_func.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import android.support.annotation.NonNull
-import android.support.design.widget.BottomNavigationView
-import android.view.MenuItem
 import android.widget.Toast
+import com.droid.alex.willtrip.adapter.DoAdapter
+import com.droid.alex.willtrip.model.DoManager
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 //        val newCreateDoFragment = CreateDoFragment()
 //        addFragment(newCreateDoFragment, R.id.container, CREATE_DO_FRAGMENT)
 //        currentFragment = newCreateDoFragment
+
+        val doManager = DoManager(0, "Alex")
 
         navigation.setOnNavigationItemSelectedListener { item ->
             when (item.getItemId()) {

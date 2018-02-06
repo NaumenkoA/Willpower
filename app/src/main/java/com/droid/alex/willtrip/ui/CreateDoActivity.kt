@@ -9,13 +9,12 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.droid.alex.willtrip.App
 import com.droid.alex.willtrip.R
 import com.droid.alex.willtrip.extension_func.setColor
 import com.droid.alex.willtrip.extension_func.toastShort
-import com.droid.alex.willtrip.model.do_class.Do
-import com.droid.alex.willtrip.model.do_class.DoDays
-import com.droid.alex.willtrip.model.do_class.DoNum
-import com.droid.alex.willtrip.model.do_class.DoPeriodic
+import com.droid.alex.willtrip.model.DayPeriod
+import com.droid.alex.willtrip.model.Do
 import com.droid.alex.willtrip.views.RoundButton
 import kotlinx.android.synthetic.main.activity_create_do.*
 import java.text.SimpleDateFormat
@@ -153,47 +152,47 @@ class CreateDoActivity : AppCompatActivity() {
         createButton.setOnClickListener {
             if (fieldCheckingPassed()) {
 
-                val numOfDaysArray = arrayListOf<Int>()
+                val numOfDaysArray = arrayListOf<Byte>()
                 var index: Int = 0
                 for (button in dayButtonArray) {
                     if (button.selectedState) {
-                        numOfDaysArray.add(index)
+                        numOfDaysArray.add(index.toByte())
                     }
                     index++
                 }
 
                 when (dayTypeSpinner.selectedItemPosition) {
                     0, 3 -> {
-                        val newDoDays = DoDays(name = titleEditText.text.toString(),
+                        val newDoDays = Do (name = titleEditText.text.toString(),
                                 note = descriptionEditText.text.toString(),
                                 complexity = Integer.parseInt(selectedCompButton!!.text.toString()),
                                 isPositive = isPositive,
-                                numberOfDays = numOfDaysArray,
                                 startDate = startDate,
                                 expireDate = expireDate
                         )
+                        newDoDays.dayPeriod.target = DayPeriod (type = DayPeriod.DAYS_OF_WEEK, period = numOfDaysArray.toByteArray())
                         sendCreatedDoObj(newDoDays)
                     }
                     1 -> {
-                        val newDoNum = DoNum(name = titleEditText.text.toString(),
+                        val newDoNum = Do (name = titleEditText.text.toString(),
                                 note = descriptionEditText.text.toString(),
                                 complexity = Integer.parseInt(selectedCompButton!!.text.toString()),
                                 isPositive = isPositive,
-                                numberOfDays = numOfDaysArray.get(0) + 1,
                                 startDate = startDate,
                                 expireDate = expireDate
                         )
+                        newDoNum.dayPeriod.target = DayPeriod (type = DayPeriod.TIMES_A_WEEK, period = (numOfDaysArray[0] + 1).toString().toByteArray())
                         sendCreatedDoObj(newDoNum)
                     }
                     2 -> {
-                        val newDoPeriodic = DoPeriodic(name = titleEditText.text.toString(),
+                        val newDoPeriodic = Do (name = titleEditText.text.toString(),
                                 note = descriptionEditText.text.toString(),
                                 complexity = Integer.parseInt(selectedCompButton!!.text.toString()),
                                 isPositive = isPositive,
-                                period = Integer.parseInt(repeatNumEditText.text.toString()),
                                 startDate = startDate,
                                 expireDate = expireDate
                         )
+                        newDoPeriodic.dayPeriod.target = DayPeriod(type = DayPeriod.REPEAT_EVERY_N_DAYS, period = repeatNumEditText.text.toString().toByteArray())
                         sendCreatedDoObj(newDoPeriodic)
                     }
                 }
@@ -220,9 +219,11 @@ class CreateDoActivity : AppCompatActivity() {
             }
         }
 
-    private fun sendCreatedDoObj (obj: Do) {
+    private fun sendCreatedDoObj (newDo: Do) {
         val returnIntent = Intent()
-        returnIntent.putExtra(CreateDoActivity.NEW_DO_OBJECT, obj)
+        val doBox = (application as App).getBoxStore().boxFor(Do::class.java)
+        doBox.put(newDo)
+        returnIntent.putExtra(NEW_DO_OBJECT, newDo)
         setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }
@@ -243,11 +244,13 @@ class CreateDoActivity : AppCompatActivity() {
             return false
         }
 
-        if (daysMode == MODE_SELECT_PERIODIC && repeatNumEditText.text.toString() == "") {
-            toastShort("Set period of repeating your commitment")
-            return false
+        if (daysMode == MODE_SELECT_PERIODIC) {
+            if (repeatNumEditText.text.toString() == "") {
+                toastShort("Set period of repeating your commitment")
+                return false
+            }
         } else {
-            var isSelected: Boolean = false
+            var isSelected = false
 
             for (button in dayButtonArray) {
                 if (button.selectedState) isSelected = true
@@ -317,3 +320,6 @@ class CreateDoActivity : AppCompatActivity() {
         }
     }
 }
+
+
+

@@ -1,10 +1,13 @@
 package com.droid.alex.willtrip.ui
 
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -12,24 +15,29 @@ import android.view.ViewGroup
 
 import com.droid.alex.willtrip.R
 import com.droid.alex.willtrip.adapter.DoAdapter
-import com.droid.alex.willtrip.model.do_class.Do
-import com.droid.alex.willtrip.model.do_class.DoDays
-import com.droid.alex.willtrip.model.do_class.DoNum
-import com.droid.alex.willtrip.model.do_class.DoPeriodic
+import com.droid.alex.willtrip.model.Do
 import kotlinx.android.synthetic.main.fragment_do_list.*
-import java.util.*
-import com.droid.alex.willtrip.R.id.recyclerView
 import android.support.v7.widget.DividerItemDecoration
+import com.droid.alex.willtrip.App
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
 
 
+class DoListFragment : Fragment(), DoAdapter.OnDoEditClickListener {
 
+    private lateinit var doBox: Box <Do>
 
-class DoListFragment : Fragment() {
+    override fun onEditClicked(position: Int, rect: Rect) {
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.edit_dialog)
+        dialog.show()
+    }
 
     companion object {
         val CREATE_DO_REQUEST = 1
     }
 
+    private lateinit var listener: DoAdapter.OnDoEditClickListener
     var arrayOfDo = mutableListOf<Do> ()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -41,19 +49,19 @@ class DoListFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val doDays = DoDays(complexity = 3, name = "Get up at 6:00", note = "Become early bird blah blah blah blah blah blah ", isPositive = true, startDate = Calendar.getInstance().time, expireDate = null, numberOfDays = arrayListOf(0, 5, 6))
-        val doNum = DoNum(complexity = 4, name = "Do sports", note = "Do sports three times a week", isPositive = true, startDate = Calendar.getInstance().time, expireDate = null, numberOfDays = 3)
-        val doPeriodic = DoPeriodic(complexity = 2, name = "Meditate", note = "Meditate every 2 days", isPositive = false, startDate = Calendar.getInstance().time, expireDate = null, period = 2)
-
-        val arrayOfDo = arrayListOf<Do>(doDays, doNum, doPeriodic)
         val layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = DoAdapter(arrayOfDo, context)
+        recyclerView.adapter = DoAdapter(arrayOfDo, context, this)
+        val itemAnimator = DefaultItemAnimator()
+        itemAnimator.addDuration = 650
+        itemAnimator.changeDuration = 650
+        itemAnimator.removeDuration = 650
+        recyclerView.itemAnimator = itemAnimator
+        recyclerView.hasFixedSize()
+        if (arrayOfDo.size == 0) empty_view.visibility = View.VISIBLE
 
         val dividerItemDecoration = DividerItemDecoration(recyclerView.context, layoutManager.getOrientation())
         recyclerView.addItemDecoration(dividerItemDecoration)
-
-
 
         fab.setOnClickListener {
             val intent = Intent(context, CreateDoActivity::class.java)
@@ -61,13 +69,29 @@ class DoListFragment : Fragment() {
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        doBox = (activity.application as App).getBoxStore().boxFor(Do::class.java)
+        val doDays = doBox.all
+        arrayOfDo = doDays
+        recyclerView.adapter = DoAdapter(arrayOfDo, context, this)
+        if (arrayOfDo.size != 0) empty_view.visibility = View.INVISIBLE
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (requestCode == CREATE_DO_REQUEST) {
             if (resultCode == AppCompatActivity.RESULT_OK) {
                 val newDo = data?.getParcelableExtra<Do>(CreateDoActivity.NEW_DO_OBJECT)
-                if (newDo != null) arrayOfDo.add(newDo)
-                recyclerView.adapter.notifyItemInserted(arrayOfDo.size-1)
+                if (newDo != null) {
+                    if (empty_view.visibility == View.VISIBLE) {
+                        empty_view.visibility = View.INVISIBLE
+                    }
+                    val newDoWithPeriod = doBox.get(newDo.id)
+                    arrayOfDo.add(newDoWithPeriod)
+                    recyclerView.scrollToPosition(arrayOfDo.size - 1)
+                    recyclerView.adapter.notifyItemInserted(arrayOfDo.size - 1)
+                }
             }
         }
     }
