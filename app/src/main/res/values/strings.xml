@@ -76,5 +76,11 @@
     <string name="edit">edit</string>
     <string name="delete">Delete</string>
     <string name="cancel">cancel</string>
+    <string name="no_title_message">Add commitment title</string>
+    <string name="no_complexity_message">Select complexity of your commitment</string>
+    <string name="data_error_message">Expire date can\'t be earlier than start date</string>
+    <string name="no_days_selected_message">Select days when you\'ll follow your commitment</string>
+    <string name="no_number_of_times_message">Set number of times during a week, when you\'ll follow your commitment</string>
+    <string name="no_repeat_period_message">Set period of repeating your commitment</string>
 
 </resources>

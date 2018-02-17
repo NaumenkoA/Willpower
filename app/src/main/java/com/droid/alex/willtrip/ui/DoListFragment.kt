@@ -82,12 +82,12 @@ class DoListFragment : Fragment(), DoAdapter.OnDoEditClickListener {
 
         if (requestCode == CREATE_DO_REQUEST) {
             if (resultCode == AppCompatActivity.RESULT_OK) {
-                val newDo = data?.getParcelableExtra<Do>(CreateDoActivity.NEW_DO_OBJECT)
+                val newDo = data?.getLongExtra(CreateDoActivity.NEW_DO_OBJECT, 0)
                 if (newDo != null) {
                     if (empty_view.visibility == View.VISIBLE) {
                         empty_view.visibility = View.INVISIBLE
                     }
-                    val newDoWithPeriod = doBox.get(newDo.id)
+                    val newDoWithPeriod = doBox.get(newDo)
                     arrayOfDo.add(newDoWithPeriod)
                     recyclerView.scrollToPosition(arrayOfDo.size - 1)
                     recyclerView.adapter.notifyItemInserted(arrayOfDo.size - 1)

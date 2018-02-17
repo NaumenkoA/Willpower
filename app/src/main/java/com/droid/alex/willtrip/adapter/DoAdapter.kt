@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.droid.alex.willtrip.R
-import com.droid.alex.willtrip.model.DayPeriod
+import com.droid.alex.willtrip.model.period.DayPeriod
 import com.droid.alex.willtrip.model.Do
 import kotlinx.android.synthetic.main.do_list_item.view.*
 import java.text.SimpleDateFormat

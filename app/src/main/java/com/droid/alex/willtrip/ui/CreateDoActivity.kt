@@ -12,34 +12,76 @@ import android.widget.ArrayAdapter
 import com.droid.alex.willtrip.App
 import com.droid.alex.willtrip.R
 import com.droid.alex.willtrip.extension_func.setColor
-import com.droid.alex.willtrip.extension_func.toastShort
-import com.droid.alex.willtrip.model.DayPeriod
+import com.droid.alex.willtrip.model.DayOfWeek
 import com.droid.alex.willtrip.model.Do
+import com.droid.alex.willtrip.presenter.CreateDoPresenter
 import com.droid.alex.willtrip.views.RoundButton
 import kotlinx.android.synthetic.main.activity_create_do.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
-class CreateDoActivity : AppCompatActivity() {
+class CreateDoActivity : AppCompatActivity(), CreateDoPresenter.CreateDoView {
+
+    override fun showSnackBarMessage(id: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getCommitmentTitle(): String? {
+
+    }
+
+    override fun getComplexity(): Int? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getStartDate(): Date {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getExpireDate(): Date? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getDaysMode(): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getSelectedDaysOfWeek(): ArrayList<DayOfWeek>? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getTimesAWeekValue(): Int? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getRepeatValue(): Int? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun returnResult(doId: Long) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     companion object {
         val SELECT_START_DATE_REQUEST = 2
         val SELECT_END_DATE_REQUEST = 3
         val MODE_SELECT_DAYS = "mode_select_days"
-        val MODE_SELECT_NUM_DAYS = "mode_select_num_days"
-        val MODE_SELECT_PERIODIC = "mode_select_periodic"
+        val MODE_SELECT_DAYS_A_WEEK = "mode_select_days_a_week"
+        val MODE_SELECT_REPEAT_PERIOD = "mode_select_repeat_period"
         val NEW_DO_OBJECT = "new_do_object"
     }
 
+    private val presenter = CreateDoPresenter (this)
     private lateinit var dayButtonArray: ArrayList<RoundButton>
     private var selectedCompButton: RoundButton? = null
     private var selectedNumButton: RoundButton? = null
     private lateinit var complexityButtonArray: ArrayList<RoundButton>
-    private var isPositive: Boolean = true
-    private var daysMode: String = MODE_SELECT_DAYS
+    private var isPositiveButtonSelected: Boolean = true
+    private var mode: String = MODE_SELECT_DAYS
     private val dateFormatter = SimpleDateFormat("d MMM yyyy", Locale.US)
-    var startDate: Date = Calendar.getInstance().time
-    var expireDate: Date? = null
+    var startDateValue: Date = Calendar.getInstance().time
+    var expireDateValue: Date? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +94,7 @@ class CreateDoActivity : AppCompatActivity() {
         dayButtonArray = arrayListOf<RoundButton>(roundButton1, roundButton2, roundButton3, roundButton4, roundButton5, roundButton6, roundButton7)
 
                //set start date by default
-        startDateTextView.text = dateFormatter.format(startDate)
+        startDateTextView.text = dateFormatter.format(Calendar.getInstance().time)
 
                 // create adapter for spinner
         val adapter = ArrayAdapter<String>(this, R.layout.spinner_item, resources.getStringArray(R.array.day_types))
@@ -76,24 +118,23 @@ class CreateDoActivity : AppCompatActivity() {
         }
 
         positiveButton.setOnClickListener({
-            if (!isPositive) {
-                isPositive = true
+            if (!isPositiveButtonSelected) {
+                isPositiveButtonSelected = true
                 negativeButton.setColor(this, R.color.colorLightGrey)
                 positiveButton.setColor(this, R.color.colorGreen)
             }
         })
 
         negativeButton.setOnClickListener({
-            if (isPositive) {
-                isPositive = false
+            if (isPositiveButtonSelected) {
+                isPositiveButtonSelected = false
                 negativeButton.setColor(this, R.color.colorLightRed)
                 positiveButton.setColor(this, R.color.colorLightGrey)
             }
         })
 
         clearButton.setOnClickListener {
-            expireDate = null
-            expireDateTextView.text = resources.getString(R.string.infinite)
+             expireDateTextView.text = resources.getString(R.string.infinite)
         }
 
         startDateCalendarButton.setOnClickListener {
@@ -132,11 +173,11 @@ class CreateDoActivity : AppCompatActivity() {
                     }
 
                     1 -> {
-                        setDaysSelectionMode(MODE_SELECT_NUM_DAYS)
+                        setDaysSelectionMode(MODE_SELECT_DAYS_A_WEEK)
                     }
 
                     2 -> {
-                        setDaysSelectionMode(MODE_SELECT_PERIODIC)
+                        setDaysSelectionMode(MODE_SELECT_REPEAT_PERIOD)
                     }
 
                     3 -> {
@@ -150,55 +191,25 @@ class CreateDoActivity : AppCompatActivity() {
         }
 
         createButton.setOnClickListener {
-            if (fieldCheckingPassed()) {
 
-                val numOfDaysArray = arrayListOf<Byte>()
-                var index: Int = 0
-                for (button in dayButtonArray) {
-                    if (button.selectedState) {
-                        numOfDaysArray.add(index.toByte())
-                    }
-                    index++
-                }
+//                val numOfDaysArray = arrayListOf<Byte>()
+//                var index = 0
+//                for (button in dayButtonArray) {
+//                    if (button.selectedState) {
+//                        numOfDaysArray.add(index.toByte())
+//                    }
+//                    index++
+//                }
 
-                when (dayTypeSpinner.selectedItemPosition) {
-                    0, 3 -> {
-                        val newDoDays = Do (name = titleEditText.text.toString(),
-                                note = descriptionEditText.text.toString(),
-                                complexity = Integer.parseInt(selectedCompButton!!.text.toString()),
-                                isPositive = isPositive,
-                                startDate = startDate,
-                                expireDate = expireDate
-                        )
-                        newDoDays.dayPeriod.target = DayPeriod (type = DayPeriod.DAYS_OF_WEEK, period = numOfDaysArray.toByteArray())
-                        sendCreatedDoObj(newDoDays)
-                    }
-                    1 -> {
-                        val newDoNum = Do (name = titleEditText.text.toString(),
-                                note = descriptionEditText.text.toString(),
-                                complexity = Integer.parseInt(selectedCompButton!!.text.toString()),
-                                isPositive = isPositive,
-                                startDate = startDate,
-                                expireDate = expireDate
-                        )
-                        newDoNum.dayPeriod.target = DayPeriod (type = DayPeriod.TIMES_A_WEEK, period = (numOfDaysArray[0] + 1).toString().toByteArray())
-                        sendCreatedDoObj(newDoNum)
-                    }
-                    2 -> {
-                        val newDoPeriodic = Do (name = titleEditText.text.toString(),
-                                note = descriptionEditText.text.toString(),
-                                complexity = Integer.parseInt(selectedCompButton!!.text.toString()),
-                                isPositive = isPositive,
-                                startDate = startDate,
-                                expireDate = expireDate
-                        )
-                        newDoPeriodic.dayPeriod.target = DayPeriod(type = DayPeriod.REPEAT_EVERY_N_DAYS, period = repeatNumEditText.text.toString().toByteArray())
-                        sendCreatedDoObj(newDoPeriodic)
-                    }
+                presenter.onCreateButtonClicked ()
+
+//            mode = dayTypeSpinner.selectedItemPosition, title = titleEditText.text.toString(),
+//            desc = descriptionEditText.text.toString(), isPositive = isPositiveButtonSelected, startDate = startDate,
+//            expireDate = expireDate, complexity = selectedCompButton?.text.toString()
                 }
-            }
         }
-    }
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -223,46 +234,11 @@ class CreateDoActivity : AppCompatActivity() {
         val returnIntent = Intent()
         val doBox = (application as App).getBoxStore().boxFor(Do::class.java)
         doBox.put(newDo)
-        returnIntent.putExtra(NEW_DO_OBJECT, newDo)
+        returnIntent.putExtra(NEW_DO_OBJECT, newDo.id)
         setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }
 
-    private fun fieldCheckingPassed ():Boolean {
-        if (titleEditText.length() == 0) {
-            toastShort("Add commitment title")
-            return false
-        }
-
-        if (selectedCompButton == null) {
-            toastShort("Select complexity of your commitment")
-            return false
-        }
-
-        if (expireDate != null && startDate > expireDate) {
-            toastShort("Expire date can't be earlier than start date")
-            return false
-        }
-
-        if (daysMode == MODE_SELECT_PERIODIC) {
-            if (repeatNumEditText.text.toString() == "") {
-                toastShort("Set period of repeating your commitment")
-                return false
-            }
-        } else {
-            var isSelected = false
-
-            for (button in dayButtonArray) {
-                if (button.selectedState) isSelected = true
-            }
-            if (!isSelected) {
-                toastShort("Select days when you'll follow your commitment")
-                return false
-            }
-        }
-
-        return true
-    }
 
     private fun hideKeyboardFrom(view: View) {
         val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -282,7 +258,7 @@ class CreateDoActivity : AppCompatActivity() {
                     dayButtonArray [i].selectedState = false
                 }
                }
-            MODE_SELECT_NUM_DAYS -> {
+            MODE_SELECT_DAYS_A_WEEK -> {
                 setDaysLayoutVisible(true)
                 for (i in 0 until dayButtonArray.size) {
                     dayButtonArray [i].text = ((i + 1).toString())
@@ -297,7 +273,7 @@ class CreateDoActivity : AppCompatActivity() {
                     dayButtonArray [i].selectedState = false
                 }
             }
-            MODE_SELECT_PERIODIC -> {
+            MODE_SELECT_REPEAT_PERIOD -> {
                 setDaysLayoutVisible(false)
             }
             else -> throw IllegalArgumentException ("Wrong entry parameter in setDaysSelectionMode function")
