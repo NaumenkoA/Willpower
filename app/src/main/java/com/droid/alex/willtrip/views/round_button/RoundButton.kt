@@ -1,4 +1,4 @@
-package com.droid.alex.willtrip.views
+package com.droid.alex.willtrip.views.round_button
 
 import android.content.Context
 import android.content.res.TypedArray
@@ -15,14 +15,16 @@ class RoundButton : Button {
     private val paint = Paint()
     private val circlePaint = Paint()
 
-    var selectedState = false
-        set(value) {
-            if (selectedState != value) {
-                field = value
-                postInvalidate()
-                requestLayout()
-            }
+    var isSelectedState = false
+
+    set(value) {
+        if (value != field) {
+            field = value
+            postInvalidate()
+            requestLayout()
         }
+    }
+
     private var selectedColor = Color.GRAY
     private var mainColor = Color.LTGRAY
     private var strokeColor = Color.BLACK
@@ -53,7 +55,7 @@ class RoundButton : Button {
     }
 
     override fun onDraw(canvas: Canvas?) {
-        if (!selectedState) {
+        if (!isSelectedState) {
             paint.color = mainColor
             strokeWidth = 0
         } else {
@@ -69,9 +71,13 @@ class RoundButton : Button {
         super.onDraw(canvas)
     }
 
+     fun getSelectedState (): Boolean {
+        return isSelectedState
+    }
+
 
     fun swap () {
-        selectedState = !selectedState
+        isSelectedState = !isSelectedState
         postInvalidate()
         requestLayout()
     }
@@ -80,7 +86,7 @@ class RoundButton : Button {
         val ta: TypedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.RoundButton, 0, 0)
         if (attrs == null) return
             try {
-                selectedState = ta.getBoolean(R.styleable.RoundButton_selected, false)
+                isSelectedState = ta.getBoolean(R.styleable.RoundButton_selected, false)
                 mainColor = ta.getColor(R.styleable.RoundButton_main_color, ContextCompat.getColor(context, R.color.colorLightGrey))
                 selectedColor = ta.getColor(R.styleable.RoundButton_selected_color, ContextCompat.getColor(context, R.color.colorGrey))
                 strokeColor = ta.getColor(R.styleable.RoundButton_stroke_color, ContextCompat.getColor(context, R.color.colorBlue))

@@ -71,28 +71,28 @@ class DoListFragment : Fragment(), DoAdapter.OnDoEditClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        doBox = (activity.application as App).getBoxStore().boxFor(Do::class.java)
-        val doDays = doBox.all
-        arrayOfDo = doDays
-        recyclerView.adapter = DoAdapter(arrayOfDo, context, this)
-        if (arrayOfDo.size != 0) empty_view.visibility = View.INVISIBLE
+//        doBox = (activity.application as App).getBoxStore().boxFor(Do::class.java)
+//        val doDays = doBox.all
+//        arrayOfDo = doDays
+//        recyclerView.adapter = DoAdapter(arrayOfDo, context, this)
+        empty_view.visibility = View.INVISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (requestCode == CREATE_DO_REQUEST) {
             if (resultCode == AppCompatActivity.RESULT_OK) {
-                val newDo = data?.getParcelableExtra<Do>(CreateDoActivity.NEW_DO_OBJECT)
-                if (newDo != null) {
-                    if (empty_view.visibility == View.VISIBLE) {
-                        empty_view.visibility = View.INVISIBLE
-                    }
-                    val newDoWithPeriod = doBox.get(newDo.id)
-                    arrayOfDo.add(newDoWithPeriod)
-                    recyclerView.scrollToPosition(arrayOfDo.size - 1)
-                    recyclerView.adapter.notifyItemInserted(arrayOfDo.size - 1)
+//                val newDo = data?.getParcelableExtra<Do>(CreateDoActivity.NEW_DO_OBJECT)
+//                if (newDo != null) {
+//                    if (empty_view.visibility == View.VISIBLE) {
+//                        empty_view.visibility = View.INVISIBLE
+//                    }
+//                    //val newDoWithPeriod = doBox.get(newDo)
+//                    arrayOfDo.add(newDo)
+//                    recyclerView.scrollToPosition(arrayOfDo.size - 1)
+//                    recyclerView.adapter.notifyItemInserted(arrayOfDo.size - 1)
                 }
             }
         }
     }
-}
+

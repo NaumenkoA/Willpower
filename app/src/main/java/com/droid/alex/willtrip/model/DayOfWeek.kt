@@ -1,12 +1,14 @@
 package com.droid.alex.willtrip.model
 
-enum class DayOfWeek(val shortName: String, val isWeekday: Boolean) {
+enum class DayOfWeek(val id: Int) {
 
-    MONDAY ("Mon", true),
-    TUESDAY ("Tue", true),
-    WEDNESDAY ("Wed", true),
-    THURSDAY ("Thu", true),
-    FRIDAY ("Fri", true),
-    SATURDAY ("Sat", false),
-    SUNDAY ("Sun", false)
+    MONDAY (0),
+    TUESDAY (1),
+    WEDNESDAY (2),
+    THURSDAY (3),
+    FRIDAY (4),
+    SATURDAY (5),
+    SUNDAY (6),
+    DEFAULT (-1)
+
 }

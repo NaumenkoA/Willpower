@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.droid.alex.willtrip.R
-import com.droid.alex.willtrip.model.DayPeriod
 import com.droid.alex.willtrip.model.Do
+import com.droid.alex.willtrip.model.period.PeriodDays
+import com.droid.alex.willtrip.model.period.PeriodNumWeek
+import com.droid.alex.willtrip.model.period.PeriodRepeat
 import kotlinx.android.synthetic.main.do_list_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,6 +47,7 @@ class DoAdapter(private val items: MutableList<Do>, private val context: Context
         private val complexity = itemView.complexityTextView
         private val daysType = itemView.daysTitleTextView
         private val days = itemView.daysTextView
+        private val specialDays = itemView.specialDaysTextView
         private val startDate = itemView.startDateTextView
         private val expireDate = itemView.expireDateTextView
         private val description = itemView.descriptionTextView
@@ -70,29 +73,35 @@ class DoAdapter(private val items: MutableList<Do>, private val context: Context
                 4 -> setCompTextAndColor(R.string.hard, R.color.colorOrange, context)
                 5 -> setCompTextAndColor(R.string.very_hard, R.color.colorRed, context)
             }
-            val dayPeriod = item.dayPeriod.target
-            when (dayPeriod.type) {
-                DayPeriod.DAYS_OF_WEEK -> {
+
+            val dayPeriod = item.period
+            when (dayPeriod) {
+                is PeriodDays -> {
                     daysType.text = context.resources.getString(R.string.days_of_week)
-                    if (dayPeriod.period.size == 7) {
+                    if (dayPeriod.daysOfWeek.size == 7) {
                         days.text = context.resources.getText(R.string.every_day)
                     } else {
                         var daysString = ""
                         val daysArray = context.resources.getStringArray(R.array.days_of_week)
-                        for (it in dayPeriod.period) {
-                            daysString += ", ${daysArray[it.toInt()]}"
+                        for (it in dayPeriod.daysOfWeek) {
+                            daysString += ", ${daysArray[it.id]}"
                         }
                         days.text = daysString.substring(1, daysString.length)
                     }
                 }
-                DayPeriod.TIMES_A_WEEK -> {
+                is PeriodNumWeek -> {
                     daysType.text = context.resources.getString(R.string.number_of_days)
-                    days.text = dayPeriod.period [0].toString()
+                    days.text = dayPeriod.numWeek.toString()
                 }
-                DayPeriod.REPEAT_EVERY_N_DAYS -> {
-                    daysType.text = context.getString(R.string.do_every_n_days, dayPeriod.period [0].toString())
+                is PeriodRepeat -> {
+                    daysType.text = context.getString(R.string.do_every_n_days, dayPeriod.repeatNum.toString())
                     days.visibility = View.INVISIBLE
                 }
+            }
+            
+            when (item.isSpecialDayEnabled) {
+                true -> specialDays.text = context.getString(R.string.yes)
+                false -> specialDays.text = context.getString(R.string.no)
             }
 
             startDate.text = dateFormatter.format(item.startDate)

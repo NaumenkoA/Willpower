@@ -5,6 +5,7 @@
              android:layout_height="match_parent"
              android:focusable="true"
              android:focusableInTouchMode="true"
+             android:id="@+id/rootLayout"
              android:background="@color/colorLightGrey"
              tools:context="com.droid.alex.willtrip.ui.CreateDoActivity">
 
@@ -44,9 +45,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/commitment_title"
-                        android:paddingLeft="8dp"
-                        android:layout_alignParentLeft="true"/>
+                        android:text="@string/commitment_title" />
 
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/titleEditText"
@@ -59,8 +58,6 @@
                         app:backgroundTint="@color/colorBlue"
                         android:textCursorDrawable="@drawable/cursor_drawable"
                         android:layout_alignBaseline="@id/titleTextView"
-                        android:layout_toRightOf="@id/titleTextView"
-                        android:layout_marginRight="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_toEndOf="@id/titleTextView"/>
 
@@ -137,12 +134,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
-                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/complexity"
-                        android:textSize="18sp"
-                        android:layout_alignParentLeft="true"/>
+                        android:textSize="18sp"/>
 
                     <LinearLayout
                         android:layout_below="@+id/complexityTextView"
@@ -154,7 +149,7 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginTop="16dp">
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButtonVeryEasy"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -162,10 +157,9 @@
                             android:text="@string/_1"
                             android:textStyle="bold"
                             android:textColor="@color/colorGreen"
-                            android:textSize="20sp"
-                            android:layout_marginRight="8dp"/>
+                            android:textSize="20sp" />
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButtonEasy"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -173,10 +167,9 @@
                             android:text="@string/_2"
                             android:textColor="@color/colorBlue"
                             android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:layout_marginRight="8dp"/>
+                            android:textSize="20sp" />
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButtonMedium"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -184,10 +177,9 @@
                             android:text="@string/_3"
                             android:textColor="@color/colorDarkYellow"
                             android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:layout_marginRight="8dp"/>
+                            android:textSize="20sp" />
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButtonHard"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -195,10 +187,9 @@
                             android:text="@string/_4"
                             android:textColor="@color/colorOrange"
                             android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:layout_marginRight="8dp"/>
+                            android:textSize="20sp" />
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButtonVeryHard"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -232,8 +223,7 @@
                         android:layout_marginTop="16dp"
                         android:id="@+id/dayTypeSpinner"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp">
+                        android:layout_height="wrap_content">
                     </Spinner>
 
                     <LinearLayout
@@ -245,7 +235,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButton1"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
@@ -253,67 +243,59 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="4dp"
                             android:textColor="@color/colorWhite"
-                            android:textSize="15sp"
-                            android:layout_marginRight="4dp"
-                            android:layout_marginLeft="8dp"/>
+                            android:textSize="15sp" />
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButton2"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
-                            android:layout_marginRight="4dp"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButton3"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
-                            android:layout_marginRight="4dp"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButton4"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
-                            android:layout_marginRight="4dp"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButton5"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
-                            android:layout_marginRight="4dp"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButton6"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
-                            android:layout_marginRight="4dp"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
-                        <com.droid.alex.willtrip.views.RoundButton
+                        <com.droid.alex.willtrip.views.round_button.RoundButton
                             android:id="@+id/roundButton7"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             app:selected_color="@color/colorBlue"
                             android:layout_marginEnd="4dp"
-                            android:layout_marginRight="4dp"
                             android:textColor="@color/colorWhite"
                             android:textSize="15sp"/>
 
@@ -335,10 +317,8 @@
                             android:textStyle="italic"
                             android:layout_marginStart="8sp"
                             android:layout_marginEnd="8dp"
-                            android:layout_marginRight="8dp"
                             android:text="@string/repeat_every"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="8sp"/>
+                            android:textSize="18sp" />
 
                         <EditText
                             android:id="@+id/repeatNumEditText"
@@ -354,21 +334,19 @@
                             android:layout_marginStart="8sp"
                             android:textStyle="italic"
                             android:text="@string/days"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="8sp"/>
+                            android:textSize="18sp"/>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/startDateLayout"
-                        android:layout_below="@id/daysLayout"
+                        android:id="@+id/specialDaysLayout"
+                        android:layout_below="@+id/repeatNumLayout"
                         android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="16dp"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="16dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:textSize="18sp"
@@ -376,8 +354,42 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="8dp"
-                            android:text="@string/start_date"
-                            android:layout_marginRight="8dp"/>
+                            android:text="@string/special_days"/>
+
+                        <Switch
+                            android:id="@+id/specialDaysSwitch"
+                            android:layout_marginStart="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                        <ImageButton
+                            android:layout_marginStart="30dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:background="@drawable/ic_info_outline_black_24dp"
+                            android:contentDescription="@string/special_days_hint" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/startDateLayout"
+                        android:layout_below="@id/specialDaysLayout"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginStart="8dp">
+
+                        <TextView
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/start_date"/>
 
                         <TextView
                             android:id="@+id/startDateTextView"
@@ -387,8 +399,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
-                            tools:text="27.01.2018"
-                            android:layout_marginRight="8dp"/>
+                            tools:text="27.01.2018" />
 
                         <ImageButton
                             android:id="@+id/startDateCalendarButton"
@@ -397,8 +408,7 @@
                             android:layout_marginEnd="8dp"
                             android:background="@drawable/round_button"
                             android:src="@drawable/ic_date_range_blue_36dp"
-                            android:contentDescription="@string/select_date"
-                            android:layout_marginRight="8dp"/>
+                            android:contentDescription="@string/select_date" />
 
                     </LinearLayout>
 
@@ -409,8 +419,7 @@
                         android:layout_marginStart="8dp"
                         android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:textSize="18sp"
@@ -418,8 +427,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="8dp"
-                            android:text="@string/active_till"
-                            android:layout_marginRight="8dp"/>
+                            android:text="@string/active_till" />
 
                         <TextView
                             android:id="@+id/expireDateTextView"
@@ -429,8 +437,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="16dp"
-                            android:text="@string/infinite"
-                            android:layout_marginRight="8dp"/>
+                            android:text="@string/infinite" />
 
                         <ImageButton
                             android:id="@+id/endDateCalendarButton"
@@ -439,8 +446,7 @@
                             android:layout_marginEnd="8dp"
                             android:background="@drawable/round_button"
                             android:src="@drawable/ic_date_range_blue_36dp"
-                            android:contentDescription="@string/select_date"
-                            android:layout_marginRight="8dp"/>
+                            android:contentDescription="@string/select_date" />
 
                         <ImageButton
                             android:id="@+id/clearButton"
@@ -469,6 +475,7 @@
         android:textColor="@color/colorWhite"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:elevation="6dp"
         android:layout_marginStart="8dp"
         android:text="@string/create_commitment"/>
 

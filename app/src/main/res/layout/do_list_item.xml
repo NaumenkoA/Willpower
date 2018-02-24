@@ -11,8 +11,7 @@
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="5dp">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/titleTextView"
@@ -84,8 +83,31 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/startDateLayout"
+            android:id="@+id/specialDaysLayout"
             android:layout_below="@id/daysLayout"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="18sp"
+                android:text="@string/special_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/specialDaysTextView"
+                tools:text = "No"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/startDateLayout"
+            android:layout_below="@id/specialDaysLayout"
             android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
