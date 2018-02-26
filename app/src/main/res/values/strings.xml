@@ -87,6 +87,7 @@
     <string name="special_days">Special days:\u0020</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="same_title_message">Commitment with the same name already exists</string>
 
 
 </resources>

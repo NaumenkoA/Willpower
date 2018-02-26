@@ -1,6 +1,3 @@
 package com.droid.alex.willtrip.model.period
 
-import android.os.Parcel
-import android.os.Parcelable
-
-class PeriodRepeat(val repeatNum: Int) : Period()
+class PeriodRepeat(val type: String = Period.TYPE_PERIODIC, val repeatNum: Int = 0) : Period(type)

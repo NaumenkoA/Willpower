@@ -1,6 +1,3 @@
 package com.droid.alex.willtrip.model.period
 
-import android.os.Parcel
-import android.os.Parcelable
-
-class PeriodNumWeek(val numWeek: Int) : Period()
+class PeriodNumWeek(val type: String = Period.TYPE_TIMES_A_WEEK, val numWeek: Int = 0) : Period(type)

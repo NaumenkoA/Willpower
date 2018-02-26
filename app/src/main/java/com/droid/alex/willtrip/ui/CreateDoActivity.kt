@@ -31,10 +31,10 @@ class CreateDoActivity : AppCompatActivity(), CreateDoPresenter.CreateDoView {
         val MODE_SELECT_DAYS = "mode_select_days"
         val MODE_SELECT_DAYS_A_WEEK = "mode_select_days_a_week"
         val MODE_SELECT_REPEAT_PERIOD = "mode_select_repeat_period"
-        val NEW_DO_OBJECT = "new_do_object"
+        val NEW_DO_OBJECT_ID = "new_do_object_id"
     }
 
-    private val presenter = CreateDoPresenter (this)
+    private lateinit var presenter: CreateDoPresenter
     private lateinit var dayButtonGroup: RoundButtonGroup
     private lateinit var complexityButtonGroup: RoundButtonGroup
     private lateinit var dayButtonArray: ArrayList <RoundButton>
@@ -47,6 +47,8 @@ class CreateDoActivity : AppCompatActivity(), CreateDoPresenter.CreateDoView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_do)
+
+        presenter = CreateDoPresenter (this)
 
         descriptionEditText.setHorizontallyScrolling(false);
         descriptionEditText.maxLines = Integer.MAX_VALUE;
@@ -168,7 +170,6 @@ class CreateDoActivity : AppCompatActivity(), CreateDoPresenter.CreateDoView {
             }
         }
 
-
     private fun hideKeyboardFrom(view: View) {
         val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
@@ -253,7 +254,7 @@ class CreateDoActivity : AppCompatActivity(), CreateDoPresenter.CreateDoView {
         return mode
     }
 
-    override fun getSelectedDaysOfWeek(): ArrayList<DayOfWeek>? {
+    override fun getSelectedDaysOfWeek(): Array<DayOfWeek>? {
         val selectedDayButtonArray = dayButtonGroup .getSelectedButtons()
         val selectedDayArray = arrayListOf<DayOfWeek>()
         val weekDays = resources.getStringArray(R.array.days_of_week)
@@ -266,8 +267,12 @@ class CreateDoActivity : AppCompatActivity(), CreateDoPresenter.CreateDoView {
 
             selectedDayArray.add(DayOfWeek.values() [dayIndex])
         }
+
         return if (selectedDayArray.size == 0)  null
-        else selectedDayArray
+        else {
+            val array = arrayOfNulls<DayOfWeek>(selectedDayArray.size)
+            selectedDayArray.toArray(array)
+        }
     }
 
     override fun getTimesAWeekValue(): Int? {
@@ -282,10 +287,9 @@ class CreateDoActivity : AppCompatActivity(), CreateDoPresenter.CreateDoView {
         else repeatNumEditText.text.toString().toInt()
     }
 
-    override fun returnResult(doValue: Do) {
+    override fun returnResult(newItemId: Long) {
         val resultIntent = Intent ()
-        Toast.makeText(this, "New do created", Toast.LENGTH_SHORT).show()
-        //resultIntent.putExtra(NEW_DO_OBJECT, doValue)
+        resultIntent.putExtra(NEW_DO_OBJECT_ID, newItemId)
         this.setResult(android.app.Activity.RESULT_OK, resultIntent)
         finish()
     }

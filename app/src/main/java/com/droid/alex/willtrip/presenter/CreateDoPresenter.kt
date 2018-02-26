@@ -1,14 +1,20 @@
 package com.droid.alex.willtrip.presenter
+import android.app.Application
+import com.droid.alex.willtrip.App
 import com.droid.alex.willtrip.R
 import com.droid.alex.willtrip.model.DayOfWeek
 import com.droid.alex.willtrip.model.Do
 import com.droid.alex.willtrip.model.period.*
 import com.droid.alex.willtrip.ui.CreateDoActivity
-import io.objectbox.BoxStore
 import java.util.*
-import kotlin.collections.ArrayList
+import android.support.v7.app.AppCompatActivity
+import com.droid.alex.willtrip.model.Do_
+import io.objectbox.Box
+
 
 class CreateDoPresenter (val view: CreateDoView): Presenter {
+
+    private lateinit var doBox: Box<Do>
 
     override fun onCreate() {
 
@@ -28,8 +34,23 @@ class CreateDoPresenter (val view: CreateDoView): Presenter {
 
     fun onCreateButtonClicked() {
 
-        if (view.getCommitmentTitle().isNullOrBlank()) {
+        if (!::doBox.isInitialized) {
+            doBox = App.instance.getBoxStore().boxFor(Do::class.java)
+        }
+
+        val title = view.getCommitmentTitle()
+
+        if (title.isNullOrBlank()) {
             view.showSnackBarMessage(R.string.no_title_message)
+            return
+        }
+
+        val builder = doBox.query()
+
+        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+        val sameDo = builder.equal(Do_.name, title).build().findFirst()
+        if (sameDo != null) {
+            view.showSnackBarMessage(R.string.same_title_message)
             return
         }
 
@@ -68,18 +89,23 @@ class CreateDoPresenter (val view: CreateDoView): Presenter {
         }
 
         val period = when (view.getDaysMode()) {
-            CreateDoActivity.MODE_SELECT_REPEAT_PERIOD -> PeriodRepeat (view.getRepeatValue()!!)
-            CreateDoActivity.MODE_SELECT_DAYS -> PeriodDays (view.getSelectedDaysOfWeek()!!)
-            CreateDoActivity.MODE_SELECT_DAYS_A_WEEK -> PeriodNumWeek (view.getTimesAWeekValue()!!)
-            else ->  PeriodRepeat (0)
+            CreateDoActivity.MODE_SELECT_REPEAT_PERIOD -> PeriodRepeat (repeatNum = view.getRepeatValue()!!)
+            CreateDoActivity.MODE_SELECT_DAYS -> PeriodDays (daysOfWeek = view.getSelectedDaysOfWeek()!!)
+            CreateDoActivity.MODE_SELECT_DAYS_A_WEEK -> PeriodNumWeek (numWeek = view.getTimesAWeekValue()!!)
+            else ->  PeriodRepeat (repeatNum = 0)
         }
 
-        val newDo = Do (name = view.getCommitmentTitle()!!.trim(), complexity = view.getComplexity()!!, startDate = view.getStartDate(),
-                expireDate = view.getExpireDate(), period = period, isPositive = view.getIsPositive(), note = view.getDescription(),
-                isSpecialDayEnabled = view.getSpecialDaysEnabled())
+        val newDo = Do (name = view.getCommitmentTitle()!!.trim(),
+                complexity = view.getComplexity()!!,
+                startDate = view.getStartDate(),
+                expireDate = view.getExpireDate(),
+                isPositive = view.getIsPositive(),
+                isSpecialDayEnabled = view.getSpecialDaysEnabled(),
+                period = period,
+                note = view.getDescription())
 
-        //val newItemId = boxStore.boxFor(Do::class.java).put(newDo)
-        view.returnResult(newDo)
+        val newItemId = doBox.put(newDo)
+        view.returnResult(newItemId)
     }
 
     interface CreateDoView {
@@ -91,10 +117,10 @@ class CreateDoPresenter (val view: CreateDoView): Presenter {
         fun getStartDate (): Date
         fun getExpireDate (): Date?
         fun getDaysMode (): String
-        fun getSelectedDaysOfWeek(): ArrayList <DayOfWeek>?
+        fun getSelectedDaysOfWeek(): Array <DayOfWeek>?
         fun getTimesAWeekValue(): Int?
         fun getRepeatValue(): Int?
         fun getSpecialDaysEnabled (): Boolean
-        fun returnResult (doValue: Do)
+        fun returnResult (newItemId: Long)
     }
 }
