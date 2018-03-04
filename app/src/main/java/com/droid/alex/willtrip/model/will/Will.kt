@@ -1,4 +1,4 @@
-package com.droid.alex.willtrip.model
+package com.droid.alex.willtrip.model.will
 
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id

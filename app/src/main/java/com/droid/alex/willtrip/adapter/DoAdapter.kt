@@ -84,7 +84,7 @@ class DoAdapter(private val items: MutableList<Do>, private val context: Context
                         var daysString = ""
                         val daysArray = context.resources.getStringArray(R.array.days_of_week)
                         for (it in dayPeriod.daysOfWeek) {
-                            daysString += ", ${daysArray[it.id]}"
+                            daysString += ", ${daysArray[it.id - 1]}"
                         }
                         days.text = daysString.substring(1, daysString.length)
                     }

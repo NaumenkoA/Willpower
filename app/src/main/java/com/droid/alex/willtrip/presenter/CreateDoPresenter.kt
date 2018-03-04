@@ -1,13 +1,11 @@
 package com.droid.alex.willtrip.presenter
-import android.app.Application
 import com.droid.alex.willtrip.App
 import com.droid.alex.willtrip.R
-import com.droid.alex.willtrip.model.DayOfWeek
+import com.droid.alex.willtrip.model.period.DayOfWeek
 import com.droid.alex.willtrip.model.Do
 import com.droid.alex.willtrip.model.period.*
 import com.droid.alex.willtrip.ui.CreateDoActivity
 import java.util.*
-import android.support.v7.app.AppCompatActivity
 import com.droid.alex.willtrip.model.Do_
 import io.objectbox.Box
 

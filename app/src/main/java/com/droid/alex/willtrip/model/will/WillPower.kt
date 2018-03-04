@@ -1,11 +1,12 @@
-package com.droid.alex.willtrip.model.period
+package com.droid.alex.willtrip.model.will
 
 import com.droid.alex.willtrip.App
-import com.droid.alex.willtrip.model.Will
 
 object WillPower {
+
     private val willBox = App.instance.getBoxStore().boxFor(Will::class.java)
-    private val will = willBox.get(0)
+
+    private val will = willBox.get(1)
 
     fun power (): Int {
         return will.getWillPower()

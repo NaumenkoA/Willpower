@@ -10,11 +10,9 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.droid.alex.willtrip.R
 import com.droid.alex.willtrip.extension_func.setColor
-import com.droid.alex.willtrip.model.DayOfWeek
-import com.droid.alex.willtrip.model.Do
+import com.droid.alex.willtrip.model.period.DayOfWeek
 import com.droid.alex.willtrip.presenter.CreateDoPresenter
 import com.droid.alex.willtrip.views.round_button.RoundButton
 import com.droid.alex.willtrip.views.round_button.RoundButtonGroup

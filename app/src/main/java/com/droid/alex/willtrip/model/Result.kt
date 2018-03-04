@@ -9,7 +9,8 @@ import java.util.*
 class Result (@Id var id: Long = 0,
               val date: Date,
               val isPositive: Boolean?,
-              val willPoint: Int) {
+              val willPoint: Int,
+              val note: String) {
 
     lateinit var doObj: ToOne <Do>
 }
