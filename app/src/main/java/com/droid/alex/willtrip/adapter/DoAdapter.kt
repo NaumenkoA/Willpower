@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.droid.alex.willtrip.R
-import com.droid.alex.willtrip.model.Do
+import com.droid.alex.willtrip.model.core.Do
 import com.droid.alex.willtrip.model.period.PeriodDays
 import com.droid.alex.willtrip.model.period.PeriodNumWeek
 import com.droid.alex.willtrip.model.period.PeriodRepeat

@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener { item ->
             when (item.getItemId()) {
                 R.id.action_all -> addFragment(DoListFragment(), R.id.container, DO_LIST_FRAGMENT)
-                R.id.action_today -> Toast.makeText(this, "Today", Toast.LENGTH_SHORT).show()
-                R.id.action_trip_mode -> Toast.makeText(this, "Will trip", Toast.LENGTH_SHORT).show()
+                R.id.action_today -> replaceFragment(TodayFragment(), R.id.container)
+                R.id.action_trip_mode -> replaceFragment(TaleFragment(), R.id.container)
             }
             true
         };

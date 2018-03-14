@@ -1,4 +1,4 @@
-package com.droid.alex.willtrip.model
+package com.droid.alex.willtrip.model.core
 
 import com.droid.alex.willtrip.model.period.Period
 import com.droid.alex.willtrip.object_box.PeriodConverter
@@ -22,4 +22,5 @@ class Do(@Id var id: Long = 0,
     @Backlink
     lateinit var results: ToMany<Result>
     lateinit var chain: ToOne<Chain>
+
 }

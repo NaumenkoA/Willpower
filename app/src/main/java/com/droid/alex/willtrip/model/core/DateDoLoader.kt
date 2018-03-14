@@ -1,10 +1,9 @@
 package com.droid.alex.willtrip.model.core
 
-import com.droid.alex.willtrip.model.Do
 import com.droid.alex.willtrip.model.period.PeriodDays
 import com.droid.alex.willtrip.model.period.PeriodNumWeek
 import com.droid.alex.willtrip.model.period.PeriodRepeat
-import com.droid.alex.willtrip.model.will.TodayDo
+import com.droid.alex.willtrip.object_box.ResultDBHelper
 import org.joda.time.DateTimeConstants
 import org.joda.time.Days
 import org.joda.time.LocalDate
@@ -17,7 +16,7 @@ private lateinit var actualDoList: ArrayList <Do>
 private lateinit var localDate: LocalDate
 private val resultDBHelper = ResultDBHelper()
 
-private var date: Date = Calendar.getInstance().time
+var date: Date = Calendar.getInstance().time
     set(value) {
     localDate = LocalDate(value)
     actualDoList = getActualDoList(doList)

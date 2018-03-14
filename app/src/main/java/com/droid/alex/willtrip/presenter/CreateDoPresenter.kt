@@ -2,11 +2,11 @@ package com.droid.alex.willtrip.presenter
 import com.droid.alex.willtrip.App
 import com.droid.alex.willtrip.R
 import com.droid.alex.willtrip.model.period.DayOfWeek
-import com.droid.alex.willtrip.model.Do
+import com.droid.alex.willtrip.model.core.Do
+import com.droid.alex.willtrip.model.core.Do_
 import com.droid.alex.willtrip.model.period.*
 import com.droid.alex.willtrip.ui.CreateDoActivity
 import java.util.*
-import com.droid.alex.willtrip.model.Do_
 import io.objectbox.Box
 
 
@@ -93,7 +93,7 @@ class CreateDoPresenter (val view: CreateDoView): Presenter {
             else ->  PeriodRepeat (repeatNum = 0)
         }
 
-        val newDo = Do (name = view.getCommitmentTitle()!!.trim(),
+        val newDo = Do(name = view.getCommitmentTitle()!!.trim(),
                 complexity = view.getComplexity()!!,
                 startDate = view.getStartDate(),
                 expireDate = view.getExpireDate(),

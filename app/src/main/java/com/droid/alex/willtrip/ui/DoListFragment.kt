@@ -15,12 +15,11 @@ import android.view.ViewGroup
 
 import com.droid.alex.willtrip.R
 import com.droid.alex.willtrip.adapter.DoAdapter
-import com.droid.alex.willtrip.model.Do
+import com.droid.alex.willtrip.model.core.Do
 import kotlinx.android.synthetic.main.fragment_do_list.*
 import android.support.v7.widget.DividerItemDecoration
 import com.droid.alex.willtrip.App
 import io.objectbox.Box
-import io.objectbox.kotlin.boxFor
 
 
 class DoListFragment : Fragment(), DoAdapter.OnDoEditClickListener {

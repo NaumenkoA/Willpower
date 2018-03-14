@@ -2,6 +2,7 @@ package com.droid.alex.willtrip.model.will
 
 import com.droid.alex.willtrip.App
 
+
 object WillPower {
 
     private val willBox = App.instance.getBoxStore().boxFor(Will::class.java)
@@ -25,4 +26,4 @@ object WillPower {
     fun save () {
         willBox.put(will)
     }
-}
+  }

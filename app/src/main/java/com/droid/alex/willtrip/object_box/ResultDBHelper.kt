@@ -1,8 +1,8 @@
-package com.droid.alex.willtrip.model.core
+package com.droid.alex.willtrip.object_box
 
 import com.droid.alex.willtrip.App
-import com.droid.alex.willtrip.model.Do
-import com.droid.alex.willtrip.model.Result
+import com.droid.alex.willtrip.model.core.Do
+import com.droid.alex.willtrip.model.core.Result
 import java.util.*
 
 class ResultDBHelper {

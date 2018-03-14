@@ -88,6 +88,16 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="same_title_message">Commitment with the same name already exists</string>
+    <string name="no_activity_found">No activities found on selected day</string>
+    <string name="complexity_wp">Complexity wp:</string>
+    <string name="chain_length">Chain length:</string>
+    <string name="chain_wp">Chain wp:</string>
+    <string name="add_comment_here">Add comment here</string>
+    <string name="add_comment">\u0020Add comment</string>
+    <string name="skip">Skip</string>
+    <string name="wp_points">%1$d wp</string>
+    <string name="special_day">Special day</string>
+    <string name="image">image</string>
 
 
 </resources>

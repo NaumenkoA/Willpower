@@ -1,0 +1,23 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.droid.alex.willtrip.ui.TaleFragment">
+
+ <ImageView
+     android:id="@+id/storyPicture"
+     android:src="@drawable/dragon"
+     android:scaleType="fitCenter"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:contentDescription="@string/image" />
+
+  <RelativeLayout
+      android:background="@color/colorTransparentGrey"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+  </RelativeLayout>
+
+
+</FrameLayout>
