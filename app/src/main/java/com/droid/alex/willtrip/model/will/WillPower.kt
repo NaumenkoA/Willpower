@@ -1,13 +1,16 @@
 package com.droid.alex.willtrip.model.will
 
+import android.annotation.SuppressLint
 import com.droid.alex.willtrip.App
-
+import com.droid.alex.willtrip.object_box.IntDBHelper
+import com.droid.alex.willtrip.object_box.IntValue
 
 object WillPower {
 
-    private val willBox = App.instance.getBoxStore().boxFor(Will::class.java)
+    private val intBox = App.instance.getBoxStore().boxFor(IntValue::class.java)
 
-    private val will = willBox.get(1)
+    private val dbHelper = IntDBHelper ()
+    private val will = Will (dbHelper.getInt(1))
 
     fun power (): Int {
         return will.getWillPower()
@@ -24,6 +27,6 @@ object WillPower {
     }
 
     fun save () {
-        willBox.put(will)
+       dbHelper.saveInt(1, will.getWillPower())
     }
   }

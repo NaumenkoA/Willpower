@@ -12,6 +12,10 @@ class DoDBHelper {
         return doBox.all
     }
 
+    fun count (): Long {
+        return doBox.count()
+    }
+
     fun loadNotExpired(currentDate: Date): List <Do> {
         return doBox.all.filter {
             (it.expireDate == null || it.expireDate >= currentDate)
