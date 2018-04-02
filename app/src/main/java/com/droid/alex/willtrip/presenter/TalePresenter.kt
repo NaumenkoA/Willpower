@@ -4,11 +4,11 @@ import android.content.Context
 import com.droid.alex.willtrip.model.story.CurrentScene
 import com.droid.alex.willtrip.model.story.SceneManager
 
-class TalePresenter (val taleView: TaleView, val context: Context): Presenter {
+class TalePresenter (private val taleView: TaleView, val context: Context): Presenter {
 
     private val sceneManager = SceneManager(context)
     private lateinit var currentScene: CurrentScene
-
+    private var isNewThemePlayed: Boolean = true
 
     override fun onCreate() {
 
@@ -19,58 +19,73 @@ class TalePresenter (val taleView: TaleView, val context: Context): Presenter {
     }
 
     override fun onResume() {
-        showScene()
+        showScene(true)
     }
 
     override fun onDestroy() {
-        sceneManager.saveState()
+        sceneManager.saveState(isNewThemePlayed)
     }
 
     fun onOptionSelected (buttonNumber: Int) {
-        sceneManager.optionSelected(buttonNumber)
-        showScene()
+        sceneManager.optionSelected(currentScene.optionTextArray.size - buttonNumber + 1)
+        showScene(false)
     }
 
-    private fun showScene () {
+    fun onBackButtonPressed (){
+        sceneManager.rollBack()
+        showScene(true)
+    }
+
+    fun onPictureClicked() {
+         taleView.prepareForeground(true)
+         isNewThemePlayed = true
+       }
+
+    private fun showScene (isSceneLoaded: Boolean) {
         currentScene = sceneManager.getCurrentScene()
-        taleView.showTitle(currentScene.titleText)
-        taleView.showBackground(currentScene.drawableId)
-        taleView.showMainText(currentScene.mainText)
+        val theme = currentScene.sceneTheme
 
-        currentScene.optionTextArray.forEachIndexed { index, s ->
-            when (index) {
-                0 -> taleView.showOption1(s, currentScene.isObstacleResolved)
-                1 -> taleView.showOption2(s, currentScene.isObstacleResolved)
-                2 -> taleView.showOption3(s, currentScene.isObstacleResolved)
+        when {
+
+            (isSceneLoaded && (!currentScene.isNewTheme||sceneManager.isNewThemePlayed)) -> {
+                taleView.emptyScreen()
+                taleView.showBackground(theme.drawableId, theme.titleTextId, theme.titleTintColorId, false)
+                taleView.prepareForeground(false)
+                showSceneContent(true)
             }
-        }
 
-        val optionNumber = currentScene.optionTextArray.size
-        for (i in 3 downTo optionNumber + 1 step 1) {
-            when (i)  {
-                3 -> taleView.showOption3(null)
-                2 -> taleView.showOption2(null)
-                1 -> taleView.showOption1(null)
+            (isSceneLoaded && currentScene.isNewTheme) -> {
+                taleView.emptyScreen()
+                taleView.playSound(theme.soundId)
+                taleView.showBackground(theme.drawableId, theme.titleTextId, theme.titleTintColorId, true)
+                isNewThemePlayed = false
             }
-        }
 
-        var obstacleString = ""
-        currentScene.obstacleTextArray.forEach {
-            obstacleString += it
-            obstacleString += System.getProperty("line.separator")
+            currentScene.isNewTheme -> {
+                taleView.emptyScreen()
+                taleView.stopSound()
+                taleView.showBackground(theme.drawableId, theme.titleTextId, theme.titleTintColorId, true)
+                taleView.playSound(theme.soundId)
+                isNewThemePlayed = false
+            }
+            else -> showSceneContent(true)
         }
+    }
 
-        if (obstacleString == "") taleView.showObstacleText(null)
-        else taleView.showObstacleText(obstacleString)
+    fun onBackgroundReady() {
+        showSceneContent(true)
+    }
+
+    private fun showSceneContent(isAnimated: Boolean) {
+        taleView.showSceneContent(currentScene.mainText, currentScene.obstacleTextArray, currentScene.optionTextArray, currentScene.isObstacleResolved, isAnimated)
     }
 
     interface TaleView {
-        fun showTitle (title: String)
-        fun showMainText (text:String)
-        fun showObstacleText (text:String?)
-        fun showBackground (drawableId: Int)
-        fun showOption1 (optionText: String?, isEnabled: Boolean = true)
-        fun showOption2 (optionText: String?, isEnabled: Boolean = true)
-        fun showOption3 (optionText: String?, isEnabled: Boolean = true)
+        fun emptyScreen()
+        fun showBackground (drawableId: Int, titleTextId: Int, titleTintColor: Int, isAnimated: Boolean)
+        fun prepareForeground (isAnimated: Boolean)
+        fun showSceneContent (mainText: String, obstacleList: ArrayList <String>?, optionList: ArrayList <String>, isOptionEnabled: Boolean = true, isAnimated: Boolean)
+        fun playSound (soundId: Int)
+        fun stopSound ()
     }
 }

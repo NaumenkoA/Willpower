@@ -2,10 +2,11 @@ package com.droid.alex.willtrip.model.story
 
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
+import io.objectbox.annotation.Index
 import io.objectbox.annotation.Transient
 
 @Entity
-class Obstacle (@Id(assignable = true) var id: Long, val textId: Int, val type: String, val value: Int) {
+class Obstacle (@Id var id: Long = 0, @Index val link: Int, val textId: Int, val type: String, val value: Int) {
 
     companion object {
         const val WP = "wp"

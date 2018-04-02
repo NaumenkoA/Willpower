@@ -10,7 +10,7 @@ object WillPower {
     private val intBox = App.instance.getBoxStore().boxFor(IntValue::class.java)
 
     private val dbHelper = IntDBHelper ()
-    private val will = Will (dbHelper.getInt(1))
+    private val will = Will (dbHelper.getIntOrZero(1))
 
     fun power (): Int {
         return will.getWillPower()

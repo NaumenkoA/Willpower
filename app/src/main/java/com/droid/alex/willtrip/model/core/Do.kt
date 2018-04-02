@@ -19,8 +19,8 @@ class Do(@Id var id: Long = 0,
          val startDate: Date = Calendar.getInstance().time,
          val expireDate: Date? = null) {
 
+    lateinit var chain: ToOne<Chain>
     @Backlink
     lateinit var results: ToMany<Result>
-    lateinit var chain: ToOne<Chain>
 
 }

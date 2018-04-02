@@ -9,7 +9,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.widget.Toast
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TaleFragment.OnSettingsSelectedListener {
+    override fun onSettingsSelected() {
+        replaceFragment(SettingsFragment(), R.id.container)
+    }
 
     var currentFragment:Fragment? = null
 

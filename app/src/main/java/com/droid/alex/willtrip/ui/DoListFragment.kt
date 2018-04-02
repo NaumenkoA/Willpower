@@ -39,13 +39,13 @@ class DoListFragment : Fragment(), DoAdapter.OnDoEditClickListener {
     private lateinit var listener: DoAdapter.OnDoEditClickListener
     var arrayOfDo = mutableListOf<Do>()
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
 
-        return inflater!!.inflate(R.layout.fragment_do_list, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_do_list, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(context)
@@ -68,9 +68,10 @@ class DoListFragment : Fragment(), DoAdapter.OnDoEditClickListener {
         }
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        doBox = (activity.application as App).getBoxStore().boxFor(Do::class.java)
+        doBox = (activity!!.application as App).getBoxStore().boxFor(Do::class.java)
         if (doBox.count() > 0) {
             val doDays = doBox.all
             arrayOfDo = doDays
@@ -89,15 +90,17 @@ class DoListFragment : Fragment(), DoAdapter.OnDoEditClickListener {
 
                     if (empty_view.visibility == View.VISIBLE) empty_view.visibility = View.INVISIBLE
 
-                            val newDo = doBox.get(newDoId)
-                            arrayOfDo.add(newDo)
-                            recyclerView.scrollToPosition(arrayOfDo.size - 1)
-                            recyclerView.adapter.notifyItemInserted(arrayOfDo.size - 1)
-                        }
-                    }
+                    val newDo = doBox.get(newDoId)
+                    arrayOfDo.add(newDo)
+                    recyclerView.scrollToPosition(arrayOfDo.size - 1)
+                    recyclerView.adapter.notifyItemInserted(arrayOfDo.size - 1)
                 }
             }
         }
+    }
+}
+
+
 
 
 

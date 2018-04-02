@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class DoAdapter(private val items: MutableList<Do>, private val context: Context, val listener: OnDoEditClickListener): RecyclerView.Adapter<DoAdapter.ViewHolder>() {
+class DoAdapter(private val items: MutableList<Do>, private val context: Context?, val listener: OnDoEditClickListener): RecyclerView.Adapter<DoAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.do_list_item, parent, false))
 
@@ -57,13 +57,13 @@ class DoAdapter(private val items: MutableList<Do>, private val context: Context
 
         private val dateFormatter = SimpleDateFormat("d MMM yyyy", Locale.US)
 
-        fun bind(item: Do, context: Context) {
+        fun bind(item: Do, context: Context?) {
 
             title.text = item.name
 
             when (item.isPositive) {
-                true -> setKindTextAndColor(R.string.do_it_excl, R.color.colorGreen, context)
-                false -> setKindTextAndColor(R.string.don_t_do_it_excl, R.color.colorRed, context)
+                true -> setKindTextAndColor(R.string.do_it_excl, R.color.colorGreen, context!!)
+                false -> setKindTextAndColor(R.string.don_t_do_it_excl, R.color.colorRed, context!!)
             }
 
             when (item.complexity) {

@@ -16,9 +16,27 @@ class DoDBHelper {
         return doBox.count()
     }
 
-    fun loadNotExpired(currentDate: Date): List <Do> {
+    fun loadNotExpired(currentDate: Date = Calendar.getInstance().time): List <Do> {
         return doBox.all.filter {
             (it.expireDate == null || it.expireDate >= currentDate)
         }
+    }
+
+    fun loadActive(currentDate: Date = Calendar.getInstance().time): List <Do> {
+        return doBox.all.filter {
+            (it.startDate <= currentDate && (it.expireDate == null || it.expireDate >= currentDate))
+        }
+    }
+
+    fun save(doObj: Do) {
+        doBox.put(doObj)
+    }
+
+    fun saveList(doList: List<Do>) {
+        doBox.put(doList)
+    }
+
+    fun removeAll() {
+        doBox.removeAll()
     }
 }
