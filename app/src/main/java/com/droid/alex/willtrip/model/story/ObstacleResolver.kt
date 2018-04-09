@@ -7,27 +7,21 @@ import java.util.*
 
 class ObstacleResolver {
     private val doDBHelper = DoDBHelper()
-    private val sceneDBHelper = SceneDBHelper()
+    private val obstacleLoader = ObstacleLoader()
 
     fun resolved (obstacleId: Int):Boolean {
-        val obstacle = sceneDBHelper.findObstacle(obstacleId)
+        val obstacle = obstacleLoader.findObstacle(obstacleId)
 
-        when (obstacle!!.type) {
-            Obstacle.COUNT -> return (doDBHelper.loadActive(Calendar.getInstance().time).count() >=obstacle.value)
-            Obstacle.WP -> return (WillPower.power()>=obstacle.value)
+        when (obstacle.type) {
+            Obstacle.WP -> return (WillPower.power()>=obstacle.value?:1)
+
             Obstacle.COMP -> {
-                var maxComp = 0
-                doDBHelper.loadActive(Calendar.getInstance().time).forEach {
-                    if (it.complexity > maxComp) maxComp = it.complexity
+                return (doDBHelper.getMaxComplexity() >= obstacle.value?:1)
                 }
-                return (maxComp >= obstacle.value)
-            }
+
             Obstacle.CHAIN -> {
-                doDBHelper.loadActive(Calendar.getInstance().time).forEach {
-                    if (it.chain.target.length >= obstacle.value) return true
+                return (doDBHelper.getMaxChain() >= obstacle.value?:1)
                 }
-                return false
-            }
             else -> return false
         }
     }

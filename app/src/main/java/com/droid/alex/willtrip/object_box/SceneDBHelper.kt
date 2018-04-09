@@ -47,4 +47,8 @@ class SceneDBHelper {
         obstacleBox.put(story.obstacleList)
 
     }
+
+    fun saveObstacle(obstacle: Obstacle?) {
+        obstacleBox.put(obstacle)
+    }
 }

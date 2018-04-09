@@ -52,7 +52,7 @@ class SceneManager (val context: Context) {
 
         val obstacleTextArray = arrayListOf<String>()
         sceneLoader.obstacleArray.forEach {
-            obstacleTextArray.add (context.resources.getString (it.textId))
+            obstacleTextArray.add (context.resources.getString (it.textId, it.value.toString()))
         }
 
         val isNewTheme = (previousSceneThemeLink == 0 || sceneTheme.link != previousSceneThemeLink)
