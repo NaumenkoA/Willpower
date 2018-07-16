@@ -39,6 +39,7 @@ class Story {
     private val scene11 = Scene (link=11, themeLink = 7, mainTextId = R.string.story_11, optionLinkArray = arrayListOf(111), obstacleLinkArray =arrayListOf())
     private val scene12 = Scene (link=12, themeLink = 7, mainTextId = R.string.story_12, optionLinkArray = arrayListOf(121), obstacleLinkArray =arrayListOf(3))
     private val scene13 = Scene (link=13, themeLink = 8, mainTextId = R.string.story_13, optionLinkArray = arrayListOf(131,132), obstacleLinkArray =arrayListOf())
+    //private val scene14 = Scene (link = 14, themeLink = 9, mainTextId = R.string.story_14, optionLinkArray = arrayListOf(141), obstacleLinkArray = )
 
     private val option1 = Option (link = 11, nextSceneLink = 2, textId =R.string.option_1)
     private val option_2_1 = Option (link = 21, nextSceneLink = 3, textId = R.string.option_2_1)

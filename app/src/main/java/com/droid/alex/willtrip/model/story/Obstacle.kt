@@ -12,5 +12,6 @@ class Obstacle (@Id var id: Long = 0, @Index val link: Int, val textId: Int, val
         const val WP = "wp"
         const val COMP = "comp"
         const val CHAIN = "chain"
+        const val COUNT = "count"
     }
 }
