@@ -16,6 +16,8 @@ class ObstacleLoader {
                 Obstacle.WP -> {
                     if (WillPower.power() + obstacle.addValue < obstacle.minValue) obstacle.value = obstacle.minValue
                     else obstacle.value = WillPower.power() + obstacle.addValue
+                    val int = obstacle.value as Int
+                    if (int > 10) obstacle.value = int - int%5
                 }
 
                 Obstacle.CHAIN -> {
@@ -28,6 +30,14 @@ class ObstacleLoader {
                     val maxComp = doDBHelper.getMaxComplexity()
                     if (maxComp + obstacle.addValue < obstacle.minValue) obstacle.value = obstacle.minValue
                     else obstacle.value = maxComp + obstacle.addValue
+                }
+
+                Obstacle.COUNT -> {
+                    obstacle.value = (doDBHelper.count() + 1).toInt()
+                }
+
+                Obstacle.BONUS -> {
+                    obstacle.value = obstacle.minValue
                 }
             }
             sceneDBHelper.saveObstacle (obstacle)

@@ -41,11 +41,15 @@ class SceneDBHelper {
     }
 
     fun saveStory (story: Story) {
+        themeBox.removeAll()
+        sceneBox.removeAll()
+        optionBox.removeAll()
+        obstacleBox.removeAll()
+
         themeBox.put(story.themeList)
         sceneBox.put(story.sceneList)
         optionBox.put(story.optionList)
         obstacleBox.put(story.obstacleList)
-
     }
 
     fun saveObstacle(obstacle: Obstacle?) {

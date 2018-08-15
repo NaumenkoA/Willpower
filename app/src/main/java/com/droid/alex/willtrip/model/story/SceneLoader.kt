@@ -9,21 +9,20 @@ class SceneLoader () {
     lateinit var currentScene: Scene
     lateinit var obstacleArray: ArrayList <Obstacle>
     lateinit var optionArray: ArrayList <Option>
-
-    init {
-        if (dbHelper.sceneBox.count() < 1) dbHelper.saveStory(Story())
-        }
+    private val obstacleLoader = ObstacleLoader()
 
     fun loadScene (link: Int) {
         obstacleArray = arrayListOf()
         optionArray = arrayListOf()
+
+        if (link == 1) dbHelper.saveStory(Story())
 
         currentScene = dbHelper.findScene(link)!!
         sceneTheme = dbHelper.findSceneTheme(currentScene.themeLink)!!
 
         val obstacleIdArray = currentScene.obstacleLinkArray
         obstacleIdArray.forEach { it ->
-            val obstacle = dbHelper.findObstacle(it)!!
+            val obstacle = obstacleLoader.findObstacle(it)
             obstacleArray.add(obstacle)}
 
         val optionIdArray = currentScene.optionLinkArray

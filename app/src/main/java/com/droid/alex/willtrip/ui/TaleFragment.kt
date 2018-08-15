@@ -13,9 +13,13 @@ import android.graphics.ColorMatrixColorFilter
 import android.graphics.ColorMatrix
 import android.media.MediaPlayer
 import android.support.v4.content.ContextCompat
+import android.support.v7.graphics.Palette
 import android.widget.Button
 import com.droid.alex.willtrip.presenter.TalePresenter
 import kotlinx.android.synthetic.main.fragment_tale.*
+import android.graphics.BitmapFactory
+import android.graphics.Bitmap
+import android.widget.Toast
 
 
 class TaleFragment : Fragment(), TalePresenter.TaleView {
@@ -41,6 +45,7 @@ class TaleFragment : Fragment(), TalePresenter.TaleView {
 
     override fun showBackground(drawableId: Int, titleTextId: Int, titleTintColor: Int, isAnimated: Boolean) {
         scenePicture.setImageResource(drawableId)
+        setFragmentBackgroundColor(drawableId)
         matrix.setSaturation(1f)
         scenePicture.colorFilter = ColorMatrixColorFilter (matrix)
 
@@ -66,6 +71,13 @@ class TaleFragment : Fragment(), TalePresenter.TaleView {
             animatorSet.play(titleFadeInAnimator).with(imageFadeInAnimator)
             animatorSet.start()
         }
+    }
+
+    private fun setFragmentBackgroundColor(drawableId: Int) {
+        val bitmap = BitmapFactory.decodeResource(context!!.resources, drawableId)
+        val palette = Palette.from(bitmap).generate()
+        val color = palette.getLightVibrantColor(ContextCompat.getColor(context!!, R.color.colorGrey));
+        this.view!!.setBackgroundColor(color)
     }
 
     override fun prepareForeground(isAnimated: Boolean) {
@@ -204,6 +216,7 @@ class TaleFragment : Fragment(), TalePresenter.TaleView {
 
     override fun onPause() {
         super.onPause()
+        presenter.onPause()
         mediaPlayer?.release()
         mediaPlayer = null
     }

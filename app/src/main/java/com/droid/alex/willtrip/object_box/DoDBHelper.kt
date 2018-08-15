@@ -34,7 +34,7 @@ class DoDBHelper {
     fun getMaxChain (): Int {
         var maxValue = 0
         loadActive().forEach {
-            if (it.chain.target.length > maxValue) maxValue = it.chain.target.length
+           if (it.chain.target != null && it.chain.target.length > maxValue) maxValue = it.chain.target.length
         }
         return maxValue
     }

@@ -15,7 +15,7 @@ class TalePresenter (private val taleView: TaleView, val context: Context): Pres
     }
 
     override fun onPause() {
-
+        sceneManager.saveState(isNewThemePlayed)
     }
 
     override fun onResume() {
@@ -23,7 +23,7 @@ class TalePresenter (private val taleView: TaleView, val context: Context): Pres
     }
 
     override fun onDestroy() {
-        sceneManager.saveState(isNewThemePlayed)
+
     }
 
     fun onOptionSelected (buttonNumber: Int) {
