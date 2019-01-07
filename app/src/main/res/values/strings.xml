@@ -261,5 +261,11 @@
     <string name="title_21">The wizard</string>
     <string name="title_22">The sword</string>
     <string name="title_23">THE END</string>
+    <string name="wp">WP</string>
+    <string name="to_next_level">To next level:</string>
+    <string name="previous_day">Previous day</string>
+    <string name="next_day">Next day</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="tomorrow">Tomorrow</string>
 
 </resources>

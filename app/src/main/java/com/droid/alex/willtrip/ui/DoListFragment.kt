@@ -49,18 +49,18 @@ class DoListFragment : Fragment(), DoAdapter.OnDoEditClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = DoAdapter(arrayOfDo, context, this)
+        recyclerView1.layoutManager = layoutManager
+        recyclerView1.adapter = DoAdapter(arrayOfDo, context, this)
         val itemAnimator = DefaultItemAnimator()
         itemAnimator.addDuration = 650
         itemAnimator.changeDuration = 650
         itemAnimator.removeDuration = 650
-        recyclerView.itemAnimator = itemAnimator
-        recyclerView.hasFixedSize()
+        recyclerView1.itemAnimator = itemAnimator
+        recyclerView1.hasFixedSize()
         if (arrayOfDo.size == 0) empty_view.visibility = View.VISIBLE
 
-        val dividerItemDecoration = DividerItemDecoration(recyclerView.context, layoutManager.getOrientation())
-        recyclerView.addItemDecoration(dividerItemDecoration)
+        val dividerItemDecoration = DividerItemDecoration(recyclerView1.context, layoutManager.orientation)
+        recyclerView1.addItemDecoration(dividerItemDecoration)
 
         fab.setOnClickListener {
             val intent = Intent(context, CreateDoActivity::class.java)
@@ -76,7 +76,7 @@ class DoListFragment : Fragment(), DoAdapter.OnDoEditClickListener {
             val doDays = doBox.all
             arrayOfDo = doDays
         }
-        recyclerView.adapter = DoAdapter(arrayOfDo, context, this)
+        recyclerView1.adapter = DoAdapter(arrayOfDo, context, this)
         empty_view.visibility = View.INVISIBLE
     }
 
@@ -92,8 +92,8 @@ class DoListFragment : Fragment(), DoAdapter.OnDoEditClickListener {
 
                     val newDo = doBox.get(newDoId)
                     arrayOfDo.add(newDo)
-                    recyclerView.scrollToPosition(arrayOfDo.size - 1)
-                    recyclerView.adapter.notifyItemInserted(arrayOfDo.size - 1)
+                    recyclerView1.scrollToPosition(arrayOfDo.size - 1)
+                    recyclerView1.adapter.notifyItemInserted(arrayOfDo.size - 1)
                 }
             }
         }

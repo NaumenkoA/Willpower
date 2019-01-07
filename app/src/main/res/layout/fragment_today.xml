@@ -1,15 +1,86 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorLightGrey"
+    android:fitsSystemWindows="true"
     tools:context="com.droid.alex.willtrip.ui.TodayFragment">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:fitsSystemWindows="true"
+            android:background="@color/colorWhite"
+            app:contentScrim="@color/colorDeepBlue"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <LinearLayout
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="240dp">
+
+            </com.github.mikephil.charting.charts.PieChart>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/previousDayButton"
+                    android:layout_weight="1"
+                    android:background="@color/colorTransparentWhite"
+                    android:src="@drawable/ic_keyboard_arrow_left_black_36dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/previous_day" />
+
+                <TextView
+                    android:id="@+id/selectedDayLabel"
+                    android:text="@string/today"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageButton
+                    android:id="@+id/nextDayButton"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_36dp"
+                    android:background="@color/colorTransparentWhite"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/next_day" />
+
+
+            </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -22,4 +93,4 @@
         android:visibility="invisible"
         android:text="@string/no_activity_found"/>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

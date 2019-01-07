@@ -3,6 +3,7 @@ package com.droid.alex.willtrip.model.story
 import android.content.Context
 import com.droid.alex.willtrip.object_box.IntDBHelper
 import java.util.*
+import kotlin.collections.ArrayList
 
 class SceneManager (val context: Context) {
 
@@ -66,6 +67,10 @@ class SceneManager (val context: Context) {
             if (!obstacleResolver.resolved(it)) allObstacleResolved = false
         }
         return allObstacleResolved
+    }
+
+    public fun getCurrentObstacleIds(): ArrayList <Int> {
+        return sceneLoader.currentScene.obstacleLinkArray
     }
 
     fun saveState (isNewThemePlayed: Boolean) {
